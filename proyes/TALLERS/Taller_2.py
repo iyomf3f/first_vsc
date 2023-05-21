@@ -189,7 +189,11 @@ def reg_ventas():
             # Input de Sucursales
 
             while True:
-                sucursal = input('En que sucursal va a ingresar las ventas?: ')
+                sucursal = input("""
+ ----------------------------------------------------------
+ ----------------------------------------------------------
+ En que sucursal va a ingresar las ventas?
+ Sucursal: """)
                 veri, sucursal = veri_sucur(sucursal)
                 if veri:
                     break
@@ -201,15 +205,13 @@ def reg_ventas():
             # Input de Fecha
 
             while True:
-                fecha = input('Ingrese fecha con formato: Lunes/12/Septiembre/2010: ')
+                fecha = input("""
+ ----------------------------------------------------------
+ ----------------------------------------------------------
+ Ingrese fecha con el siguiente formato 'Lunes/12/Septiembre/2010'
+ Fecha: """)
                 veri, fecha, dia_n, dia, mes, anho = veri_fecha(fecha)
                 if veri:
-                    msg_ventas = f"""
-----------------------------------------------------------
-----------------------------------------------------------
-Cuantas ventas va a ingresar en la fecha actual?
-fecha = {fecha}
-Respuesta: """
                     break
                 else:
                     total_err += 1
@@ -218,7 +220,10 @@ Respuesta: """
             # Input de numero de ventas
 
             while True:
-                num_de_ventas = input(msg_ventas)
+                num_de_ventas = input("""
+ ----------------------------------------------------------
+ ----------------------------------------------------------
+ Cuantas ventas va a ingresar?: """)
                 veri, num_de_ventas = veri_num(num_de_ventas)
                 if veri:
                     break
@@ -235,14 +240,6 @@ Respuesta: """
                     prod_id = input('Ingrese el ID del producto (formato E4**, E422): ')
                     veri, prod_id = veri_idprod(prod_id)
                     if veri:
-                        msg_id_prod = f"""
-----------------------------------------------------------
-----------------------------------------------------------  
-Cuantas unidades se vendieron del producto {prod_id}?: """
-                        msg_precio_prod = f"""
-----------------------------------------------------------
-----------------------------------------------------------
-A que precio se vendio {prod_id}? (En dolares): $"""
                         break
                     else:
                         total_err += 1
@@ -251,8 +248,11 @@ A que precio se vendio {prod_id}? (En dolares): $"""
                 # Input de cantidad de producto con la ID anterior
 
                 while True:
-                    cant_de_prod = input(msg_id_prod)
-                    veri, cant_de_prod = veri_num(cant_de_prod)
+                    cant_de_producto = input(f"""
+ ----------------------------------------------------------
+ ----------------------------------------------------------  
+ Cuantas unidades se vendieron del producto {prod_id}?: """)
+                    veri, cant_de_producto = veri_num(cant_de_producto)
 
                     if veri:
                         break
@@ -263,22 +263,26 @@ A que precio se vendio {prod_id}? (En dolares): $"""
                 # Input del precio del procducto con la ID anterior
 
                 while True:
-                    precio_prod = float(input(msg_precio_prod))
-                    veri, precio_prod = veri_num(precio_prod)
-
+                    precio_producto = float(input(f"""
+ ----------------------------------------------------------
+ ----------------------------------------------------------
+ A que precio se vendio {prod_id}? (En dolares): $"""))
+                    veri, precio_producto = veri_num(precio_producto)
                     if veri:
                         break
                     else:
                         total_err += 1
                         continue
                 num_de_ventas -= 1
-                venta = f'venta,{sucursal},{dia_n},{dia},{mes},{anho},{prod_id},{cant_de_prod},{precio_prod},{total_err}\n'
+                venta = f'venta,{sucursal},{dia_n},{dia},{mes},{anho},{prod_id},{cant_de_producto},{precio_producto},{total_err}\n'
                 file.write(venta)
             break
 
 def reg_produc():
     """Funcion de registro de produccion"""
+
     total_err = 0
+
     while True:
         while True:
             start = input('Quiere registrar la produccion?: Y/N').upper()
@@ -292,51 +296,67 @@ def reg_produc():
                 continue
         if veri == 'N':
             return total_err
+
+        # Input de Fecha.
+
+        while True:
+            fecha = input("""
+ ----------------------------------------------------------
+ ----------------------------------------------------------
+ Ingrese fecha con el siguiente formato 'Lunes/12/Septiembre/2010'
+ Fecha: """)
+            veri, fecha, dia_n, dia, mes, anho = veri_fecha(fecha)
+            if veri:
+                break
+            else:
+                total_err += 1
+                continue
+
+        # Input de cantidad de produciones.
+
         while True:
             with open('datos_de_empresa.txt','a', encoding='utf-8') as file:
                 while True:
-                    num_de_prod = input()
-                    veri, num_de_prod = veri_num(num_de_prod)
+                    cant_de_produccion = input()
+                    veri, cant_de_produccion = veri_num(cant_de_produccion)
                     if veri:
                         break
                     else:
                         total_err += 1
                         continue
-                while num_de_prod > 0:
+                while cant_de_produccion > 0:
                     while True:
                         # Formato de id E4** ejemplo E402, etc...
                         prod_id = input('Ingrese el ID del producto (formato E4**, E422): ')
                         veri, prod_id = veri_idprod(prod_id)
                         if veri:
-                            msg_id_prod = f"""
-        ----------------------------------------------------------
-        ----------------------------------------------------------  
-        Cuantas unidades se vendieron del producto {prod_id}?: """
-                            msg_costo_prod = f"""
-        ----------------------------------------------------------
-        ----------------------------------------------------------
-        Que costo de producion tuvo {prod_id}? (En dolares): $"""
                             break
                         else:
                             total_err += 1
                             continue
                     while True:
-                        cant_de_prod = input(msg_id_prod)
-                        veri, cant_de_prod = veri_num(cant_de_prod)
+                        cant_de_produccion = input(f"""
+ ----------------------------------------------------------
+ ----------------------------------------------------------  
+ Cuantas unidades se vendieron del producto {prod_id}?: """)
+                        veri, cant_de_produccion = veri_num(cant_de_produccion)
                         if veri:
                             break
                         else:
                             total_err =+1
                             continue
                     while True:
-                        costo_prod = float(input(msg_costo_prod))
-                        veri, costo_prod = veri_num(costo_prod)
+                        costo_produccion = float(input(f"""
+ ----------------------------------------------------------
+ ----------------------------------------------------------
+ Que costo de producion tuvo {prod_id}? (En dolares): $"""))
+                        veri, costo_produccion = veri_num(costo_produccion)
                         if veri:
                             break
                         else:
                             total_err += 1
                             continue
-                produccion = f'produccion,{prod_id},{cant_de_prod},{costo_prod}'
+                produccion = f'produccion,{dia_n}, {dia}, {mes}, {anho},{prod_id},{cant_de_produccion},{costo_produccion},{total_err}'
                 file.write(produccion)
 
 def reg_fina():
@@ -385,14 +405,16 @@ def reg_fina():
                             total_err += 1
                             continue
                     num_de_tran -= 1
-                    transaccion = f'transaccion, {monto}\n,{total_err}'
+                    transaccion = f'transaccion, {monto},{total_err}\n'
                     file.write(transaccion)
+
 def estadisticas():
     """Funcion que calcula las estadisticas a mostrar"""
     meses_contadores = {mes: 0 for mes in MESES}
     monto_total_sucursales = {sucursal: 0 for sucursal in SUCURSALES}
+
     while True:
-        with open('datos_de_empresa.txt','a', encoding='utf-8') as file:
+        with open('datos_de_empresa.txt','r', encoding='utf-8') as file:
             for lines in file:
                 part = lines.split(',')
                 tipo = part[0]
@@ -400,22 +422,57 @@ def estadisticas():
                     sucursal = part[1]
                     dia = part[2]
                     mes = part[4]
-                    anho = part[5]
-                    cant_prod = part[7]
-                    precio_prod = part[8]
-                    if anho == 2023:
-                        cant_prod_total += cant_prod
+                    anho = int(part[5])
+                    cant_producto = int(part[7])
+                    precio_producto = int(part[8])
+                    errores = int(part[9])
+
                     meses_contadores[mes] += 1
-                    monto_total_sucursales[sucursal] += (precio_prod * cant_prod)
+                    monto_total_sucursales[sucursal] += (precio_producto * cant_producto)
+                    total_errores += errores
+
+                    if anho == 2023:
+                        cant_producto_2023 += cant_producto
+
                     if mes == 'Julio' or mes == 'Junio' or mes == 'Agosto':
-                        jja_ventas += (precio_prod * cant_prod)
+                        jja_ventas += (precio_producto * cant_producto)
+
                 elif tipo == 'produccion':
+                    dia = part[1]
+                    mes = part[3]
+                    costo_produccion = part[7]
+
+                    total_errores += errores
+
                     if dia == 'Sabado' or dia == 'Domingo':
-                        pass
+                        costo_produccion_total_sd += costo_produccion
+                        cont_produccion_sd += 1
+
                     if mes == 'Julio' or mes == 'Junio' or mes == 'Agosto':
-                        pass
-            msg_estadistica = 'tu puta madre'
+                        jja_costo_produccion += costo_produccion
+
+                elif tipo == 'transaccion':
+                    errores = part[2]
+
+                    total_errores += errores
+
+            mes_mayor_ventas, numero_mes_mayor_ventas = max(meses_contadores.items(), key = lambda x: x[1])
+            msg_estadistica = f"""
+ --------------------------------------------------------------------------
+ Cantidad de veces que un hubo un error de limpieza de datos: {total_errores}
+ --------------------------------------------------------------------------
+ Indicar el mes que tuvo más ventas. Mes: {mes_mayor_ventas} Numero de ventas: {numero_mes_mayor_ventas}
+ --------------------------------------------------------------------------
+ Cantidad de productos vendidos para el 2023: {cant_producto_2023}
+ --------------------------------------------------------------------------
+ Promedio de costos de producción en fin de semana: {costo_produccion_total_sd / cont_produccion_sd}
+ --------------------------------------------------------------------------
+ Margen neto para los meses de junio, julio y agosto: {jja_ventas - jja_costo_produccion}
+ --------------------------------------------------------------------------"""
             print(msg_estadistica)
+            for sucursal, monto in monto_total_sucursales.items():
+                print(f'Monto total de", {sucursal}, "es:" {monto}')
+
 
 while True:
     while True:
@@ -456,11 +513,13 @@ while True:
         print('Saliendo de la app...')
         break
 
+# 10. Cantidad de veces que un hubo un error de limpieza de datos
+#  (el texto estaba vacío o venía con un error de ValueError que fue capturado).
+
 # 17. Indicar el mes que tuvo más ventas.
-# 12. Cantidad (unidades) de productos vendidos para el 2023.
-# 10. Cantidad de veces que un hubo un error de limpieza de datos (el texto estaba vacío
-#     o venía con un error de ValueError que fue capturado.
-#  8. Margen neto (ventas menos costos de producción) para los meses de junio, julio y
-#     agosto.
-#  6. Promedio de costos de producción en fin de semana (sábado y domingo).
 #  3. Monto total de ventas por cada sucursal.
+
+# 12. Cantidad (unidades) de productos vendidos para el 2023. ###
+
+#  6. Promedio de costos de producción en fin de semana (sábado y domingo). ###
+#  8. Margen neto (ventas menos costos de producción) para los meses de junio, julio y agosto. ###
