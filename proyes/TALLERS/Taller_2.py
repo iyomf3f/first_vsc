@@ -124,8 +124,8 @@ def veri_fecha(fecha):
             return veri, fecha, dia_n, dia, mes, anho
         else:
             raise ValueError
-    except Exception as error:
-        print("Error:", str(error))
+    except Exception:
+        print("Error:")
         veri = False
         dia = ''
         dia_n = ''
