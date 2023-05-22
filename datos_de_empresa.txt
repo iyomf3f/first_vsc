@@ -1,2 +1,151 @@
-venta,12,Mayo,2002,E401,12,90
-venta,12,Mayo,2002,E402,50,100
+venta,Space X,Domingo,6,Febrero,2023,E403,5,20,2
+venta,Amazon,Miercoles,1,Marzo,2023,E402,8,30,4
+produccion,Viernes,14,Julio,2023,E406,12,60,6
+venta,Google,Jueves,12,Septiembre,2023,E408,10,45,5
+produccion,Lunes,28,Noviembre,2023,E410,15,75,8
+transaccion,-50,2
+produccion,Miercoles,19,Abril,2023,E405,20,100,10
+venta,Amazon,Martes,5,Octubre,2023,E403,6,25,3
+produccion,Jueves,8,Junio,2023,E402,9,45,4
+produccion,Martes,21,Agosto,2023,E409,7,35,3
+venta,Space X,Domingo,12,Febrero,2023,E407,4,15,2
+transaccion,100,5
+produccion,Miercoles,30,Agosto,2023,E404,8,40,4
+venta,Google,Viernes,23,Septiembre,2023,E408,10,50,6
+produccion,Jueves,7,Diciembre,2023,E401,6,30,3
+venta,Space X,Lunes,14,Agosto,2023,E406,12,55,5
+produccion,Miercoles,1,Julio,2023,E410,10,50,6
+produccion,Viernes,19,Mayo,2023,E409,5,25,2
+venta,Amazon,Jueves,7,Diciembre,2023,E407,8,40,4
+produccion,Sabado,17,Junio,2023,E403,9,45,4
+venta,Google,Martes,26,Septiembre,2023,E404,10,50,6
+produccion,Lunes,25,Septiembre,2023,E402,12,60,6
+venta,Space X,Domingo,30,Julio,2023,E401,6,30,3
+produccion,Jueves,15,Junio,2023,E410,10,50,6
+transaccion,-25,3
+produccion,Martes,12,Septiembre,2023,E408,12,60,6
+venta,Amazon,Viernes,6,Enero,2023,E406,10,45,5
+produccion,Lunes,1,Enero,2023,E405,10,50,5
+produccion,Miercoles,8,Marzo,2023,E407,5,20,2
+venta,Google,Jueves,16,Febrero,2023,E403,8,35,3
+produccion,Viernes,3,Febrero,2023,E401,6,30,3
+venta,Space X,Domingo,9,Abril,2023,E409,7,30,3
+produccion,Martes,7,Febrero,2023,E404,8,40,4
+produccion,Miercoles,21,Junio,2023,E406,10,50,6
+venta,Amazon,Lunes,19,Junio,2023,E405,12,55,5
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+venta,Google,Jueves,12,Enero,2023,E401,6,25,2
+produccion,Lunes,28,Agosto,2023,E408,12,60,6
+produccion,Miercoles,16,Agosto,2023,E407,8,35,3
+venta,Space X,Domingo,4,Junio,2023,E403,9,45,4
+produccion,Jueves,26,Octubre,2023,E402,10,50,6
+produccion,Martes,21,Mayo,2023,E409,7,30,3
+venta,Amazon,Viernes,8,Septiembre,2023,E406,10,45,5
+produccion,Sabado,17,Junio,2023,E401,6,25,2
+venta,Google,Miercoles,3,Mayo,2023,E405,12,55,5
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+transaccion,-75,3
+produccion,Lunes,11,Septiembre,2023,E408,12,60,6
+venta,Space X,Domingo,9,Abril,2023,E407,8,35,3
+produccion,Martes,7,Febrero,2023,E404,8,40,4
+venta,Amazon,Lunes,19,Junio,2023,E406,10,50,6
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+venta,Google,Jueves,12,Enero,2023,E401,6,25,2
+produccion,Lunes,28,Agosto,2023,E408,12,60,6
+produccion,Miercoles,16,Agosto,2023,E407,8,35,3
+venta,Space X,Domingo,4,Junio,2023,E403,9,45,4
+produccion,Jueves,26,Octubre,2023,E402,10,50,6
+produccion,Martes,21,Mayo,2023,E409,7,30,3
+venta,Amazon,Viernes,8,Septiembre,2023,E406,10,45,5
+produccion,Sabado,17,Junio,2023,E401,6,25,2
+venta,Google,Miercoles,3,Mayo,2023,E405,12,55,5
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+transaccion,-75,3
+produccion,Lunes,11,Septiembre,2023,E408,12,60,6
+venta,Space X,Domingo,9,Abril,2023,E407,8,35,3
+produccion,Martes,7,Febrero,2023,E404,8,40,4
+venta,Amazon,Lunes,19,Junio,2023,E406,10,50,6
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+venta,Google,Jueves,12,Enero,2023,E401,6,25,2
+produccion,Lunes,28,Agosto,2023,E408,12,60,6
+produccion,Miercoles,16,Agosto,2023,E407,8,35,3
+venta,Space X,Domingo,4,Junio,2023,E403,9,45,4
+produccion,Jueves,26,Octubre,2023,E402,10,50,6
+produccion,Martes,21,Mayo,2023,E409,7,30,3
+venta,Amazon,Viernes,8,Septiembre,2023,E406,10,45,5
+produccion,Sabado,17,Junio,2023,E401,6,25,2
+venta,Google,Miercoles,3,Mayo,2023,E405,12,55,5
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+transaccion,-75,3
+produccion,Lunes,11,Septiembre,2023,E408,12,60,6
+venta,Space X,Domingo,9,Abril,2023,E407,8,35,3
+produccion,Martes,7,Febrero,2023,E404,8,40,4
+venta,Amazon,Lunes,19,Junio,2023,E406,10,50,6
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+venta,Google,Jueves,12,Enero,2023,E401,6,25,2
+produccion,Lunes,28,Agosto,2023,E408,12,60,6
+produccion,Miercoles,16,Agosto,2023,E407,8,35,3
+venta,Space X,Domingo,4,Junio,2023,E403,9,45,4
+produccion,Jueves,26,Octubre,2023,E402,10,50,6
+produccion,Martes,21,Mayo,2023,E409,7,30,3
+venta,Amazon,Viernes,8,Septiembre,2023,E406,10,45,5
+produccion,Sabado,17,Junio,2023,E401,6,25,2
+venta,Google,Miercoles,3,Mayo,2023,E405,12,55,5
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+transaccion,-75,3
+produccion,Lunes,11,Septiembre,2023,E408,12,60,6
+venta,Space X,Domingo,9,Abril,2023,E407,8,35,3
+produccion,Martes,7,Febrero,2023,E404,8,40,4
+venta,Amazon,Lunes,19,Junio,2023,E406,10,50,6
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+venta,Google,Jueves,12,Enero,2023,E401,6,25,2
+produccion,Lunes,28,Agosto,2023,E408,12,60,6
+produccion,Miercoles,16,Agosto,2023,E407,8,35,3
+venta,Space X,Domingo,4,Junio,2023,E403,9,45,4
+produccion,Jueves,26,Octubre,2023,E402,10,50,6
+produccion,Martes,21,Mayo,2023,E409,7,30,3
+venta,Amazon,Viernes,8,Septiembre,2023,E406,10,45,5
+produccion,Sabado,17,Junio,2023,E401,6,25,2
+venta,Google,Miercoles,3,Mayo,2023,E405,12,55,5
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+transaccion,-75,3
+produccion,Lunes,11,Septiembre,2023,E408,12,60,6
+venta,Space X,Domingo,9,Abril,2023,E407,8,35,3
+produccion,Martes,7,Febrero,2023,E404,8,40,4
+venta,Amazon,Lunes,19,Junio,2023,E406,10,50,6
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+venta,Google,Jueves,12,Enero,2023,E401,6,25,2
+produccion,Lunes,28,Agosto,2023,E408,12,60,6
+produccion,Miercoles,16,Agosto,2023,E407,8,35,3
+venta,Space X,Domingo,4,Junio,2023,E403,9,45,4
+produccion,Jueves,26,Octubre,2023,E402,10,50,6
+produccion,Martes,21,Mayo,2023,E409,7,30,3
+venta,Amazon,Viernes,8,Septiembre,2023,E406,10,45,5
+produccion,Sabado,17,Junio,2023,E401,6,25,2
+venta,Google,Miercoles,3,Mayo,2023,E405,12,55,5
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+transaccion,-75,3
+produccion,Lunes,11,Septiembre,2023,E408,12,60,6
+venta,Space X,Domingo,9,Abril,2023,E407,8,35,3
+produccion,Martes,7,Febrero,2023,E404,8,40,4
+venta,Amazon,Lunes,19,Junio,2023,E406,10,50,6
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+venta,Google,Jueves,12,Enero,2023,E401,6,25,2
+produccion,Lunes,28,Agosto,2023,E408,12,60,6
+produccion,Miercoles,16,Agosto,2023,E407,8,35,3
+venta,Space X,Domingo,4,Junio,2023,E403,9,45,4
+produccion,Jueves,26,Octubre,2023,E402,10,50,6
+produccion,Martes,21,Mayo,2023,E409,7,30,3
+venta,Amazon,Viernes,8,Septiembre,2023,E406,10,45,5
+produccion,Sabado,17,Junio,2023,E401,6,25,2
+venta,Google,Miercoles,3,Mayo,2023,E405,12,55,5
+produccion,Viernes,4,Agosto,2023,E410,15,75,8
+transaccion,-75,3venta,Space X,Lunes,12,Septiembre,2015,E405,10,4,5
+venta,Space X,Lunes,12,Septiembre,2015,E404,5,9,5
+venta,Space X,Lunes,12,Septiembre,2010,E401,1,9,0
+transaccion, -9000,0
+transaccion, 9000,0
+transaccion, -90,9
+produccion,Lunes, 12, Septiembre, 2010,E401,5,90,0produccion,Lunes, 12, Septiembre, 2010,E402,5,99,0produccion,Lunes, 12, Septiembre, 2010,E410,10,600,0venta,Space X,Lunes,12,Septiembre,2010,E401,10,90,6
+produccion,Lunes, 12, Septiembre, 2010,E401,3,90.0,2produccion,Lunes, 12, Septiembre, 2010,E402,12,900.0,1transaccion, -9031203,3
+transaccion, 9999999999,3
