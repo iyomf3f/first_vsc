@@ -233,9 +233,7 @@ def reg_ventas():
                     print("""\n Sucursal invalida. Ingrese una sucursal que este en la lista!!!""")
                     total_err += 1
                     continue
-
             # Input de Fecha
-
             while True:
                 fecha = input("""
  ----------------------------------------------------------
@@ -250,9 +248,7 @@ def reg_ventas():
                     print('\n Fecha no valida. Asegurese de ingresar en un formato valido!!!')
                     total_err += 1
                     continue
-
             # Input de numero de ventas
-
             while True:
                 num_de_ventas = input("""
  ----------------------------------------------------------
@@ -268,7 +264,6 @@ def reg_ventas():
                     continue
 
             for venta in range(num_de_ventas):
-
                 # Input de ID de producto
                 while True:
                     prod_id = input("""
@@ -284,9 +279,7 @@ def reg_ventas():
                         print('\n Ingrese una ID valida!!! (ejemplo: E401, E402 ... E409,E410)')
                         total_err += 1
                         continue
-
                 # Input de cantidad de producto con la ID anterior
-
                 while True:
                     cant_de_producto = input(f"""
  ----------------------------------------------------------
@@ -301,9 +294,7 @@ def reg_ventas():
                         print('\n Numero de unidades invalida. Asegurese de ingresar valores positivos!!!')
                         total_err += 1
                         continue
-
                 # Input del precio del procducto con la ID anterior
-
                 while True:
                     precio_producto = float(input(f"""
  ----------------------------------------------------------
@@ -349,9 +340,7 @@ def reg_produc():
 
     with open('datos_de_empresa.txt','a', encoding='utf-8') as file:
         while True:
-
             # Input de Fecha.
-
             while True:
                 fecha = input("""
  ----------------------------------------------------------
@@ -366,9 +355,7 @@ def reg_produc():
                     print('\n Fecha no valida. Asegurese de ingresar en el formato valido!!!')
                     total_err += 1
                     continue
-
             # Input de cantidad de produciones.
-
             while True:
                 cant_de_produccion = input(f"""
  ----------------------------------------------------------
@@ -398,6 +385,7 @@ def reg_produc():
                         print('\n Ingrese una ID valida!!! (ejemplo: E401, E402 ... E409,E410)')
                         total_err += 1
                         continue
+                # Input de cantidad de unidades de la produccion
                 while True:
                     cant_de_produccion = input(f"""
  ----------------------------------------------------------
@@ -411,6 +399,7 @@ def reg_produc():
                         print('\n Numero de unidades invalida. Asegurese de ingresar valores positivos!!!')
                         total_err =+1
                         continue
+                # Input para el costo de prod para x cantidad de unidades
                 while True:
                     costo_produccion = input(f"""
  ----------------------------------------------------------
@@ -425,7 +414,7 @@ def reg_produc():
                         print('\n Ingrese un costo valido. Solo puede ingresar valores positivos!!!')
                         total_err += 1
                         continue
-                produccion = f'produccion,{dia_n}, {dia}, {mes}, {anho},{prod_id},{cant_de_produccion},{costo_produccion},{total_err}'
+                produccion = f'produccion,{dia_n}, {dia}, {mes}, {anho},{prod_id},{cant_de_produccion},{costo_produccion},{total_err}\n'
                 file.write(produccion)
                 print("""
  ----------------------------------------------------------
@@ -470,7 +459,7 @@ def reg_fina():
                     total_err += 1
                     continue
 
-            for tran in range(num_de_tran):
+            for transac in range(num_de_tran):
                 while True:
                     iog = input("""
  ----------------------------------------------------------
@@ -541,7 +530,7 @@ def estadisticas():
 
         with open('datos_de_empresa.txt','r', encoding='utf-8') as file:
             for lines in file:
-                part = lines.split(',')
+                part = lines.strip().split()
                 tipo = part[0]
                 if tipo == 'venta':
                     sucursal = part[1]
@@ -560,7 +549,7 @@ def estadisticas():
 
                     # 10. Cantidad de veces que un hubo un error de limpieza de datos.
                     total_errores += errores
-                    
+
                     # 12. Cantidad de productos vendidos para el 2023.
                     if anho == 2023:
                         cant_producto_2023 += cant_producto
