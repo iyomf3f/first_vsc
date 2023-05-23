@@ -138,15 +138,15 @@ def veri_fecha(fecha):
         dia_n, dia, mes, anho = fecha.split('/')
         dia = int(dia)
         anho = int(anho)
-        dia_n = dia_n.capitalize()
-        mes = mes.capitalize()
+        dia_n = dia_n.title()()
+        mes = mes.title()
         if dia_n in DIAS and 1 <= dia <= 31 and mes in MESES and 1900 <= anho<= 2023:
             veri = True
             fecha = f'{dia_n}/{dia}/{mes}/{anho}'
             return veri, fecha, dia_n, dia, mes, anho
         else:
             raise ValueError
-    except Exception:
+    except (ValueError, IndexError,TypeError):
         veri = False
         dia = ''
         dia_n = ''
@@ -230,7 +230,8 @@ def reg_ventas():
                 if veri:
                     break
                 else:
-                    print("""\n Sucursal invalida. Ingrese una sucursal que este en la lista!!!""")
+                    print("""\n Sucursal invalida. Ingrese una sucursal que este en la lista!!!'
+                    '\n(Recuerde usar MAYUSCULAS)""")
                     total_err += 1
                     continue
             # Input de Fecha
@@ -310,7 +311,8 @@ def reg_ventas():
                         total_err += 1
                         continue
                 num_de_ventas -= 1
-                venta = f'venta,{sucursal},{dia_n},{dia},{mes},{anho},{prod_id},{cant_de_producto},{precio_producto},{total_err}\n'
+                venta = (f'venta,{sucursal},{dia_n},{dia},{mes},{anho},'
+                f'{prod_id},{cant_de_producto},{precio_producto},{total_err}\n')
                 file.write(venta)
                 print("""
  ----------------------------------------------------------
@@ -366,7 +368,8 @@ def reg_produc():
                 if veri:
                     break
                 else:
-                    print('\n Cantidad de produciones invalida. Asegurese de ingresar valores positivos!!!')
+                    print('\n Cantidad de produciones invalida.'
+                    'Asegurese de ingresar valores positivos!!!')
                     total_err += 1
                     continue
             for producion in range(cant_de_produccion):
@@ -414,7 +417,8 @@ def reg_produc():
                         print('\n Ingrese un costo valido. Solo puede ingresar valores positivos!!!')
                         total_err += 1
                         continue
-                produccion = f'produccion,{dia_n}, {dia}, {mes}, {anho},{prod_id},{cant_de_produccion},{costo_produccion},{total_err}\n'
+                produccion = (f'produccion,{dia_n}, {dia}, {mes}, {anho},'
+                f'{prod_id},{cant_de_produccion},{costo_produccion},{total_err}\n')
                 file.write(produccion)
                 print("""
  ----------------------------------------------------------
@@ -455,7 +459,8 @@ def reg_fina():
                 if veri:
                     break
                 else:
-                    print('\n Numero de transacciones no valido. Solo puede ingresar valores positivos!!!')
+                    print('\n Numero de transacciones no valido.'
+                    'Solo puede ingresar valores positivos!!!')
                     total_err += 1
                     continue
 
@@ -470,7 +475,8 @@ def reg_fina():
                     if veri:
                         break
                     else:
-                        print('\n Solo pude responder con Ingreso o Gasto. Recuerde usar mayusculas en la primera letra!!!')
+                        print('\n Solo pude responder con Ingreso o Gasto.'
+                         'Recuerde usar mayusculas en la primera letra!!!')
                         total_err += 1
                         continue
                 while True:
@@ -483,7 +489,8 @@ def reg_fina():
                     if veri:
                         break
                     else:
-                        print('\n Monto no valido. Recuerde que los Gastos son negativos y los Ingresos positivos!!!')
+                        print('\n Monto no valido.'
+                        'Recuerde que los Gastos son negativos y los Ingresos positivos!!!')
                         total_err += 1
                         continue
                 num_de_tran -= 1
@@ -583,7 +590,9 @@ def estadisticas():
                     total_errores += errores
 
             # 17. Indicar el mes que tuvo más ventas.
-            mes_mayor_ventas, numero_mes_mayor_ventas = max(meses_contadores.items(), key = lambda x: x[1])
+            mes_mayor_ventas, numero_mes_mayor_ventas = max(
+                meses_contadores.items(),
+                 key = lambda item: item[1])
 
             if cont_produccion_sd > 0:
                 promedio_cost_produccion_sd = costo_produccion_total_sd / cont_produccion_sd
@@ -593,7 +602,8 @@ def estadisticas():
             if jja_ventas > 0 or jja_costo_produccion > 0:
                 margen_neto_jja = jja_ventas - jja_costo_produccion
             else:
-                margen_neto_jja = 'No hubo ventas ni produccion en los meses de Junio, Julio y Agosto.'
+                margen_neto_jja = ('No hubo ventas ni produccion en'
+                'los meses de Junio, Julio y Agosto.')
 
             if total_errores > 0:
                 msg_total_errores = total_errores
