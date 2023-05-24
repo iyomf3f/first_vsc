@@ -681,7 +681,6 @@ def main():
                 print('\n ----------------------------------------------------------\n'
                 ' Volviendo al menu princimal...')
 
-
         # Mostrar estadísticas.
         elif opcion_main == 2:
             estadisticas()
