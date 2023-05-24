@@ -1,8 +1,9 @@
 """Function printing python version."""
 
-# Taller 1
+# Taller 2
 # Integrantes: Paulo Zarate
 ####################################################################################################
+
 MSG_MENU_M = """
  ----------------------------------------------------------
  ----------------------------------------------------------
@@ -61,30 +62,28 @@ ID_PRODUCTOS = [
     'E410'
     ]
 
-def veri_menu_main(select):
-    """Verificador del menu principal"""
+def veri_menus(opciones, select):
+    """Verificador de menus"""
+
+    opciones_totales = []
+
+    for opcion in range(1, opciones + 1):
+        opciones_totales.append(opcion)
 
     try:
-        if select in ['1','2','3']:
-            return select
+        select = int(select)
+        if select in opciones_totales:
+            veri = True
+            return veri, select
         else:
             raise ValueError
     except ValueError:
-        return select
-
-def veri_menu_write(select):
-    """Verificador del menu principal"""
-
-    try:
-        if select in ['1','2','3','4']:
-            return select
-        else:
-            raise ValueError
-    except ValueError:
-        return select
+        veri = False
+        return veri, select
 
 def veri_monto(monto,iog):
     """Verificador de montos"""
+
     try:
         monto = int(monto)
         if iog == 'Ingreso':
@@ -105,6 +104,7 @@ def veri_monto(monto,iog):
 
 def veri_opcion(opcion):
     """Verificador de inicio"""
+
     try:
         if opcion == 'Y':
             veri = 'Y'
@@ -134,6 +134,7 @@ def veri_sucur(sucursal):
 
 def veri_fecha(fecha):
     """Verificador de fechas"""
+
     try:
         dia_n, dia, mes, anho = fecha.split('/')
         dia = int(dia)
@@ -155,7 +156,6 @@ def veri_fecha(fecha):
         return veri, fecha, dia_n, dia, mes, anho
 
 def veri_num(numero):
-
     """verificador de num"""
 
     try:
@@ -170,7 +170,6 @@ def veri_num(numero):
         return veri, numero
 
 def veri_num_float(numero):
-
     """verificador de num"""
 
     try:
@@ -186,6 +185,7 @@ def veri_num_float(numero):
 
 def veri_idprod(ide):
     """Verificador de ID's"""
+
     try:
         if ide in ID_PRODUCTOS:
             veri = True
@@ -198,6 +198,7 @@ def veri_idprod(ide):
 
 def veri_ingresos(iog):
     """Verificador de ingresos o gastos"""
+
     try:
         if iog == 'Ingreso':
             veri = True
@@ -212,7 +213,6 @@ def veri_ingresos(iog):
         return veri, iog
 
 def reg_ventas():
-
     """Funcion para registrar ventas"""
 
     total_err = 0
@@ -230,8 +230,8 @@ def reg_ventas():
                 if veri:
                     break
                 else:
-                    print("""\n Sucursal invalida. Ingrese una sucursal que este en la lista!!!'
-                    '\n(Recuerde usar MAYUSCULAS)""")
+                    print('\n Sucursal invalida. Ingrese una sucursal que este en la lista!!!'
+                    '\n (Recuerde usar MAYUSCULAS)')
                     total_err += 1
                     continue
             # Input de Fecha
@@ -311,9 +311,9 @@ def reg_ventas():
                         total_err += 1
                         continue
                 num_de_ventas -= 1
-                venta = (f'venta,{sucursal},{dia_n},{dia},{mes},{anho},'
+                venta_txt = (f'venta,{sucursal},{dia_n},{dia},{mes},{anho},'
                 f'{prod_id},{cant_de_producto},{precio_producto},{total_err}\n')
-                file.write(venta)
+                file.write(venta_txt)
                 print("""
  ----------------------------------------------------------
 
@@ -417,9 +417,9 @@ def reg_produc():
                         print('\n Ingrese un costo valido. Solo puede ingresar valores positivos!!!')
                         total_err += 1
                         continue
-                produccion = (f'produccion,{dia_n}, {dia}, {mes}, {anho},'
+                produccion_txt = (f'produccion,{dia_n}, {dia}, {mes}, {anho},'
                 f'{prod_id},{cant_de_produccion},{costo_produccion},{total_err}\n')
-                file.write(produccion)
+                file.write(produccion_txt)
                 print("""
  ----------------------------------------------------------
 
@@ -494,8 +494,8 @@ def reg_fina():
                         total_err += 1
                         continue
                 num_de_tran -= 1
-                transaccion = f'transaccion, {monto},{total_err}\n'
-                file.write(transaccion)
+                transaccion_txt = f'transaccion, {monto},{total_err}\n'
+                file.write(transaccion_txt)
                 print("""
  ----------------------------------------------------------
 
@@ -593,6 +593,9 @@ def estadisticas():
             mes_mayor_ventas, numero_mes_mayor_ventas = max(
                 meses_contadores.items(),
                  key = lambda item: item[1])
+            if numero_mes_mayor_ventas == 0:
+                mes_mayor_ventas = 'Ninguno'
+                numero_mes_mayor_ventas = 'Ninguno'
 
             if cont_produccion_sd > 0:
                 promedio_cost_produccion_sd = costo_produccion_total_sd / cont_produccion_sd
@@ -601,9 +604,10 @@ def estadisticas():
 
             if jja_ventas > 0 or jja_costo_produccion > 0:
                 margen_neto_jja = jja_ventas - jja_costo_produccion
+                margen_neto_jja_txt = f'${margen_neto_jja}'
             else:
-                margen_neto_jja = ('No hubo ventas ni produccion en'
-                'los meses de Junio, Julio y Agosto.')
+                margen_neto_jja_txt = ('No hubo ventas ni produccion en'
+                ' los meses de Junio, Julio y Agosto.')
 
             if total_errores > 0:
                 msg_total_errores = total_errores
@@ -625,7 +629,7 @@ def estadisticas():
 
  Promedio de costos de producción en fin de semana: {promedio_cost_produccion_sd}
 
- Margen neto para los meses de Junio, Julio y Agosto: ${margen_neto_jja}
+ Margen neto para los meses de Junio, Julio y Agosto: {margen_neto_jja_txt}
  """
             print(msg_estadistica)
             for sucursal, monto in monto_total_sucursales.items():
@@ -642,44 +646,48 @@ def estadisticas():
 
 def main():
     """Función principal"""
+
     while True:
         # Menú principal.
         while True:
             select_main = input(MSG_MENU_M)
-            opcion_main = veri_menu_main(select_main)
-            if opcion_main in ['1', '2', '3']:
+            veri, opcion_main = veri_menus(3, select_main)
+            if veri:
                 break
             else:
                 continue
 
         # Ingresar Datos.
-        if opcion_main == '1':
+        if opcion_main == 1:
             while True:
                 select_write = input(MSG_MENU_W)
-                opcion_write = veri_menu_write(select_write)
-                if opcion_write in ['1', '2', '3', '4']:
+                veri, opcion_write = veri_menus(4, select_write)
+                if veri:
                     break
                 else:
                     continue
 
             # Registro de ventas.
-            if opcion_write == '1':
+            if opcion_write == 1:
                 reg_ventas()
-
             # Registro de producciones.
-            elif opcion_write == '2':
+            elif opcion_write == 2:
                 reg_produc()
-
             # Registro de finanzas.
-            elif opcion_write == '3':
+            elif opcion_write == 3:
                 reg_fina()
+            # Volver al menu principal
+            elif  opcion_write == 4:
+                print('\n ----------------------------------------------------------\n'
+                ' Volviendo al menu princimal...')
+
 
         # Mostrar estadísticas.
-        elif opcion_main == '2':
+        elif opcion_main == 2:
             estadisticas()
 
         # Salir de la app.
-        elif opcion_main == '3':
+        elif opcion_main == 3:
             print("""
  ----------------------------------------------------------
  Saliendo de la app...""")
