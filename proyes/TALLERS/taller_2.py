@@ -531,9 +531,11 @@ def estadisticas():
         jja_costo_produccion = 0
         costo_produccion_total_sd = 0
         cont_produccion_sd = 0
-
+        
         meses_contadores = {mes: 0 for mes in MESES}
         monto_total_sucursales = {sucursal: 0 for sucursal in SUCURSALES}
+        meses_contadores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        monto_total_sucursales = [0, 0, 0]
 
         with open('datos_de_empresa.txt','r', encoding='utf-8') as file:
             for lines in file:
@@ -545,7 +547,7 @@ def estadisticas():
                     mes = part[4]
                     anho = int(part[5])
                     cant_producto = int(part[7])
-                    precio_producto = int(part[8])
+                    precio_producto = float(part[8])
                     errores = int(part[9])
 
                     # 17. Indicar el mes que tuvo más ventas.
@@ -568,7 +570,7 @@ def estadisticas():
                 elif tipo == 'produccion':
                     dia = part[1]
                     mes = part[3]
-                    costo_produccion = int(part[7])
+                    costo_produccion = float(part[7])
                     errores = int(part[8])
 
                     # 10. Cantidad de veces que un hubo un error de limpieza de datos.
@@ -590,12 +592,12 @@ def estadisticas():
                     total_errores += errores
 
             # 17. Indicar el mes que tuvo más ventas.
-            mes_mayor_ventas, numero_mes_mayor_ventas = max(
-                meses_contadores.items(),
-                 key = lambda item: item[1])
-            if numero_mes_mayor_ventas == 0:
-                mes_mayor_ventas = 'Ninguno'
-                numero_mes_mayor_ventas = 'Ninguno'
+            cant_mes_mayor_venta = max(meses_contadores)
+            nombre_mes_mayor = MESES[meses_contadores.index(cant_mes_mayor_venta)]
+
+            if cant_mes_mayor_venta == 0:
+                nombre_mes_mayor = 'Ninguno'
+                cant_mes_mayor_venta = 'Ninguno'
 
             if cont_produccion_sd > 0:
                 promedio_cost_produccion_sd = costo_produccion_total_sd / cont_produccion_sd
@@ -623,7 +625,7 @@ def estadisticas():
  ----------------------------------------------------------
  Cantidad de veces que un hubo un error de limpieza de datos: {msg_total_errores}
 
- Indicar el mes que tuvo más ventas. Mes: {mes_mayor_ventas} Numero de ventas: {numero_mes_mayor_ventas}
+ Indicar el mes que tuvo más ventas. Mes: {nombre_mes_mayor} Numero de ventas: {cant_mes_mayor_venta}
 
  Cantidad de productos vendidos para el 2023: {msg_cant_producto_2023}
 
