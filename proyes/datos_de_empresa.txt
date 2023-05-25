@@ -1,0 +1,2 @@
+venta,Google,Lunes,12,Septiembre,2010,E401,10,50,1
+venta,Google,Lunes,12,Septiembre,2010,E402,50,5,1

@@ -139,9 +139,9 @@ def veri_fecha(fecha):
         dia_n, dia, mes, anho = fecha.split('/')
         dia = int(dia)
         anho = int(anho)
-        dia_n = dia_n.title()()
+        dia_n = dia_n.title()
         mes = mes.title()
-        if dia_n in DIAS and 1 <= dia <= 31 and mes in MESES and 1900 <= anho<= 2023:
+        if dia_n in DIAS and 1 <= dia <= 31 and mes in MESES and 1900 <= anho <= 2023:
             veri = True
             fecha = f'{dia_n}/{dia}/{mes}/{anho}'
             return veri, fecha, dia_n, dia, mes, anho
@@ -251,10 +251,11 @@ def reg_ventas():
                     continue
             # Input de numero de ventas
             while True:
-                num_de_ventas = input("""
+                num_de_ventas = input(f"""
  ----------------------------------------------------------
  ----------------------------------------------------------
  Cuantas ventas va a ingresar?
+ Para la feha: {fecha}
  Respuesta: """)
                 veri, num_de_ventas = veri_num(num_de_ventas)
                 if veri:
@@ -297,13 +298,13 @@ def reg_ventas():
                         continue
                 # Input del precio del procducto con la ID anterior
                 while True:
-                    precio_producto = float(input(f"""
+                    precio_producto = input(f"""
  ----------------------------------------------------------
  ----------------------------------------------------------
  A que precio se vendio {prod_id}?
  (En dolares)
- Respuestas: $"""))
-                    veri, precio_producto = veri_num(precio_producto)
+ Respuestas: $""")
+                    veri, precio_producto = veri_num_float(precio_producto)
                     if veri:
                         break
                     else:
@@ -531,15 +532,13 @@ def estadisticas():
         jja_costo_produccion = 0
         costo_produccion_total_sd = 0
         cont_produccion_sd = 0
-        
-        meses_contadores = {mes: 0 for mes in MESES}
-        monto_total_sucursales = {sucursal: 0 for sucursal in SUCURSALES}
+
         meses_contadores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         monto_total_sucursales = [0, 0, 0]
 
         with open('datos_de_empresa.txt','r', encoding='utf-8') as file:
             for lines in file:
-                part = lines.strip().split()
+                part = lines.strip().split(',')
                 tipo = part[0]
                 if tipo == 'venta':
                     sucursal = part[1]
@@ -551,10 +550,10 @@ def estadisticas():
                     errores = int(part[9])
 
                     # 17. Indicar el mes que tuvo más ventas.
-                    meses_contadores[mes] += 1
+                    meses_contadores[MESES.index(mes)] += 1
 
                     #  3. Monto total de ventas por cada sucursal.
-                    monto_total_sucursales[sucursal] += (precio_producto * cant_producto)
+                    monto_total_sucursales[SUCURSALES.index(sucursal)] += (precio_producto * cant_producto)
 
                     # 10. Cantidad de veces que un hubo un error de limpieza de datos.
                     total_errores += errores
@@ -634,7 +633,7 @@ def estadisticas():
  Margen neto para los meses de Junio, Julio y Agosto: {margen_neto_jja_txt}
  """
             print(msg_estadistica)
-            for sucursal, monto in monto_total_sucursales.items():
+            for sucursal, monto in zip(SUCURSALES, monto_total_sucursales):
                 print(f' Monto total de {sucursal} es: {monto}\n')
             while True:
                 print(' ----------------------------------------------------------')
