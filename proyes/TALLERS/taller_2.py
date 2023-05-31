@@ -3,6 +3,7 @@
 # Taller 2
 # Integrantes: Paulo Zarate
 ####################################################################################################
+import traceback
 
 MSG_MENU_M = """
  ----------------------------------------------------------
@@ -523,108 +524,108 @@ def estadisticas():
     """Funcion que calcula las estadisticas a mostrar"""
 
     veri =True
+    try:
+        while veri:
 
-    while veri:
+            total_errores = 0
+            cant_producto_2023 = 0
+            jja_ventas = 0
+            jja_costo_produccion = 0
+            costo_produccion_total_sd = 0
+            cont_produccion_sd = 0
 
-        total_errores = 0
-        cant_producto_2023 = 0
-        jja_ventas = 0
-        jja_costo_produccion = 0
-        costo_produccion_total_sd = 0
-        cont_produccion_sd = 0
+            meses_contadores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            monto_total_sucursales = [0, 0, 0]
 
-        meses_contadores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        monto_total_sucursales = [0, 0, 0]
+            with open('datos_de_empresa.txt','r', encoding='utf-8') as file:
+                for lines in file:
+                    part = lines.strip().split(',')
+                    tipo = part[0]
+                    if tipo == 'venta':
+                        sucursal = part[1]
+                        dia = part[2]
+                        mes = part[4]
+                        anho = int(part[5])
+                        cant_producto = int(part[7])
+                        precio_producto = float(part[8])
+                        errores = int(part[9])
 
-        with open('datos_de_empresa.txt','r', encoding='utf-8') as file:
-            for lines in file:
-                part = lines.strip().split(',')
-                tipo = part[0]
-                if tipo == 'venta':
-                    sucursal = part[1]
-                    dia = part[2]
-                    mes = part[4]
-                    anho = int(part[5])
-                    cant_producto = int(part[7])
-                    precio_producto = float(part[8])
-                    errores = int(part[9])
+                        # 17. Indicar el mes que tuvo más ventas.
+                        meses_contadores[MESES.index(mes)] += 1
 
-                    # 17. Indicar el mes que tuvo más ventas.
-                    meses_contadores[MESES.index(mes)] += 1
+                        #  3. Monto total de ventas por cada sucursal.
+                        monto_total_sucursales[SUCURSALES.index(sucursal)] += (precio_producto * cant_producto)
 
-                    #  3. Monto total de ventas por cada sucursal.
-                    monto_total_sucursales[SUCURSALES.index(sucursal)] += (precio_producto * cant_producto)
+                        # 10. Cantidad de veces que un hubo un error de limpieza de datos.
+                        total_errores += errores
 
-                    # 10. Cantidad de veces que un hubo un error de limpieza de datos.
-                    total_errores += errores
+                        # 12. Cantidad de productos vendidos para el 2023.
+                        if anho == 2023:
+                            cant_producto_2023 += cant_producto
 
-                    # 12. Cantidad de productos vendidos para el 2023.
-                    if anho == 2023:
-                        cant_producto_2023 += cant_producto
+                        #  8. Margen neto para los meses de junio, julio y agosto.
+                        if mes == 'Julio' or mes == 'Junio' or mes == 'Agosto':
+                            jja_ventas += (precio_producto * cant_producto)
 
-                    #  8. Margen neto para los meses de junio, julio y agosto.
-                    if mes == 'Julio' or mes == 'Junio' or mes == 'Agosto':
-                        jja_ventas += (precio_producto * cant_producto)
+                    elif tipo == 'produccion':
+                        dia = part[1]
+                        mes = part[3]
+                        costo_produccion = float(part[7])
+                        errores = int(part[8])
 
-                elif tipo == 'produccion':
-                    dia = part[1]
-                    mes = part[3]
-                    costo_produccion = float(part[7])
-                    errores = int(part[8])
+                        # 10. Cantidad de veces que un hubo un error de limpieza de datos.
+                        total_errores += errores
 
-                    # 10. Cantidad de veces que un hubo un error de limpieza de datos.
-                    total_errores += errores
+                        #  6. Promedio de costos de producción en fin de semana.
+                        if dia == 'Sabado' or dia == 'Domingo':
+                            costo_produccion_total_sd += costo_produccion
+                            cont_produccion_sd += 1
 
-                    #  6. Promedio de costos de producción en fin de semana.
-                    if dia == 'Sabado' or dia == 'Domingo':
-                        costo_produccion_total_sd += costo_produccion
-                        cont_produccion_sd += 1
+                        #  8. Margen neto para los meses de junio, julio y agosto.
+                        if mes == 'Julio' or mes == 'Junio' or mes == 'Agosto':
+                            jja_costo_produccion += costo_produccion
 
-                    #  8. Margen neto para los meses de junio, julio y agosto.
-                    if mes == 'Julio' or mes == 'Junio' or mes == 'Agosto':
-                        jja_costo_produccion += costo_produccion
+                    elif tipo == 'transaccion':
+                        errores = int(part[2])
 
-                elif tipo == 'transaccion':
-                    errores = int(part[2])
+                        # 10. Cantidad de veces que un hubo un error de limpieza de datos.
+                        total_errores += errores
 
-                    # 10. Cantidad de veces que un hubo un error de limpieza de datos.
-                    total_errores += errores
+                # 17. Indicar el mes que tuvo más ventas.
+                cant_mes_mayor_venta = max(meses_contadores)
+                nombre_mes_mayor = MESES[meses_contadores.index(cant_mes_mayor_venta)]
 
-            # 17. Indicar el mes que tuvo más ventas.
-            cant_mes_mayor_venta = max(meses_contadores)
-            nombre_mes_mayor = MESES[meses_contadores.index(cant_mes_mayor_venta)]
+                if cant_mes_mayor_venta == 0:
+                    nombre_mes_mayor = 'Ninguno'
+                    cant_mes_mayor_venta = 'Ninguno'
 
-            if cant_mes_mayor_venta == 0:
-                nombre_mes_mayor = 'Ninguno'
-                cant_mes_mayor_venta = 'Ninguno'
+                if cont_produccion_sd > 0:
+                    promedio_cost_produccion_sd = costo_produccion_total_sd / cont_produccion_sd
+                else:
+                    promedio_cost_produccion_sd = 'No hubo producion en fin de semana.'
 
-            if cont_produccion_sd > 0:
-                promedio_cost_produccion_sd = costo_produccion_total_sd / cont_produccion_sd
-            else:
-                promedio_cost_produccion_sd = 'No hubo producion en fin de semana.'
+                if jja_ventas > 0 or jja_costo_produccion > 0:
+                    margen_neto_jja = jja_ventas - jja_costo_produccion
+                    margen_neto_jja_txt = f'${margen_neto_jja}'
+                else:
+                    margen_neto_jja_txt = ('No hubo ventas ni produccion en'
+                    ' los meses de Junio, Julio y Agosto.')
 
-            if jja_ventas > 0 or jja_costo_produccion > 0:
-                margen_neto_jja = jja_ventas - jja_costo_produccion
-                margen_neto_jja_txt = f'${margen_neto_jja}'
-            else:
-                margen_neto_jja_txt = ('No hubo ventas ni produccion en'
-                ' los meses de Junio, Julio y Agosto.')
+                if total_errores > 0:
+                    msg_total_errores = total_errores
+                else:
+                    msg_total_errores = 'No hubo errores al ingresar los datos.'
 
-            if total_errores > 0:
-                msg_total_errores = total_errores
-            else:
-                msg_total_errores = 'No hubo errores al ingresar los datos.'
+                if cant_producto_2023 > 0:
+                    msg_cant_producto_2023 = cant_producto_2023
+                else:
+                    msg_cant_producto_2023 = 'No se vendio ningun producto en 2023'
 
-            if cant_producto_2023 > 0:
-                msg_cant_producto_2023 = cant_producto_2023
-            else:
-                msg_cant_producto_2023 = 'No se vendio ningun producto en 2023'
-
-            msg_estadistica = f"""
+                msg_estadistica = f"""
  ----------------------------------------------------------
  Cantidad de veces que un hubo un error de limpieza de datos: {msg_total_errores}
 
- Indicar el mes que tuvo más ventas. Mes: {nombre_mes_mayor} Numero de ventas: {cant_mes_mayor_venta}
+ Indicar el mes que tuvo más ventas. Mes: {nombre_mes_mayor}, con {cant_mes_mayor_venta} ventas.
 
  Cantidad de productos vendidos para el 2023: {msg_cant_producto_2023}
 
@@ -632,19 +633,21 @@ def estadisticas():
 
  Margen neto para los meses de Junio, Julio y Agosto: {margen_neto_jja_txt}
  """
-            print(msg_estadistica)
-            for sucursal, monto in zip(SUCURSALES, monto_total_sucursales):
-                print(f' Monto total de {sucursal} es: {monto}\n')
-            while True:
-                print(' ----------------------------------------------------------')
-                opcion = input(' Escriba "Y" para continuar: ').upper()
-                veri = veri_opcion(opcion)
-                if veri:
-                    veri = False
-                    break
-                else:
-                    continue
-
+                print(msg_estadistica)
+                for sucursal, monto in zip(SUCURSALES, monto_total_sucursales):
+                    print(f' Monto total de {sucursal} es: {monto}\n')
+                while True:
+                    print(' ----------------------------------------------------------')
+                    opcion = input(' Escriba "Y" para continuar: ').upper()
+                    veri = veri_opcion(opcion)
+                    if veri:
+                        veri = False
+                        break
+                    else:
+                        continue
+    except Exception:
+        print('\n Uno o mas datos del archivo que ingreso estan erroneos!!\n')
+        traceback.print_exc()
 def main():
     """Función principal"""
 
