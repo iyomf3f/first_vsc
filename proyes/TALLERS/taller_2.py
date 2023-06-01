@@ -1,9 +1,10 @@
 """Function printing python version."""
 
 # Taller 2
-# Integrantes: Paulo Zarate
+# Integrantes: 
 ####################################################################################################
 import traceback
+
 # Listas / Mensajes
 
 MSG_MENU_M = """
@@ -66,7 +67,7 @@ ID_PRODUCTOS = [
     'E410'
     ]
 
-# Funciones para menus y repetir accion.
+# Funciones para menus y repetir acciones o no.
 
 def veri_menus(opciones,msg):
     """Verificador de menus"""
@@ -87,7 +88,7 @@ def veri_menus(opciones,msg):
         except ValueError:
             continue
 
-def seguir_o_no(tipo):
+def repetir_o_no(tipo):
     """Verificador de 'seguir o no' en ingresos de registro y mostrando estadisticas"""
 
     if tipo == 1:
@@ -330,7 +331,7 @@ def reg_ventas():
                 ' Venta ingresada con EXITO.\n\n'
                 ' ----------------------------------------------------------')
             
-            opcion = seguir_o_no(1)
+            opcion = repetir_o_no(1)
 
             if opcion == 'N':
                 break
@@ -407,7 +408,7 @@ def reg_produc():
                 ' ----------------------------------------------------------\n\n'
                 ' Produccion ingresada con EXITO.\n\n'
                 ' ----------------------------------------------------------')
-            opcion = seguir_o_no(2)
+            opcion = repetir_o_no(2)
 
             if opcion == 'N':
                 break
@@ -470,7 +471,7 @@ def reg_fina():
                 ' ----------------------------------------------------------\n\n'
                 ' Transaccion ingresada con EXITO.\n\n'
                 ' ----------------------------------------------------------')
-            opcion = seguir_o_no(3)
+            opcion = repetir_o_no(3)
 
             if opcion == 'N':
                 break
@@ -579,7 +580,8 @@ def estadisticas():
                 f'\n'
                 f' ----------------------------------------------------------\n'
                 f' Cantidad de veces que un hubo un error de limpieza de datos: {msg_total_errores}\n'
-                f' Indicar el mes que tuvo más ventas. Mes: {nombre_mes_mayor}, con {cant_mes_mayor_venta} ventas.\n'
+                f' Indicar el mes que tuvo más ventas. Mes: {nombre_mes_mayor}' 
+                f', con {cant_mes_mayor_venta} ventas.\n'
                 f' Cantidad de productos vendidos para el 2023: {msg_cant_producto_2023}\n'
                 f' Promedio de costos de producción en fin de semana: {promedio_cost_produccion_sd}\n'
                 f' Margen neto para los meses de Junio, Julio y Agosto: {margen_neto_jja_txt}\n'
@@ -588,7 +590,7 @@ def estadisticas():
                 for sucursal, monto in zip(SUCURSALES, monto_total_sucursales):
                     print(f' Monto total de {sucursal} es: {monto}\n')
 
-                opcion = seguir_o_no(4)
+                opcion = repetir_o_no(4)
                 if opcion == 'Y':
                     break
 
@@ -626,7 +628,7 @@ def main():
                 ' ----------------------------------------------------------\n'
                 ' Volviendo al menu princimal...')
 
-        # Mostrar estadísticas.
+        # Opcion para mostrar estadísticas.
         elif opcion_main == 2:
             estadisticas()
 
@@ -639,4 +641,3 @@ def main():
             break
 
 if __name__ == '__main__':
-    main()
