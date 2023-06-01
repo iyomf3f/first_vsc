@@ -648,6 +648,7 @@ def estadisticas():
     except Exception:
         print('\n Uno o mas datos del archivo que ingreso estan erroneos!!\n')
         traceback.print_exc()
+
 def main():
     """Función principal"""
 
