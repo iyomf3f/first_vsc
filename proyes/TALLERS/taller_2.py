@@ -4,8 +4,10 @@
 # Integrantes: Paulo Zarate
 ####################################################################################################
 import traceback
+# Listas / Mensajes
 
 MSG_MENU_M = """
+ Menu Principal
  ----------------------------------------------------------
  ----------------------------------------------------------
  1. Ingresar Datos.
@@ -14,6 +16,7 @@ MSG_MENU_M = """
  ----------------------------------------------------------
  Elegir: """
 MSG_MENU_W = """
+ Menu de Registros
  ----------------------------------------------------------
  ----------------------------------------------------------
  1. Registro de ventas.
@@ -63,24 +66,72 @@ ID_PRODUCTOS = [
     'E410'
     ]
 
-def veri_menus(opciones, select):
+# Funciones para menus y repetir accion.
+
+def veri_menus(opciones,msg):
     """Verificador de menus"""
 
     opciones_totales = []
 
-    for opcion in range(1, opciones + 1):
-        opciones_totales.append(opcion)
+    while True:
+        try:
+            select = int(input(msg))
+
+            for opcion in range(1, opciones + 1):
+                opciones_totales.append(opcion)
+
+            if select in opciones_totales:
+                return select
+            else:
+                raise ValueError
+        except ValueError:
+            continue
+
+def seguir_o_no(tipo):
+    """Verificador de 'seguir o no' en ingresos de registro y mostrando estadisticas"""
+
+    if tipo == 1:
+        vpt = 'seguir ingresando ventas?'
+    elif tipo == 2:
+        vpt = 'seguir ingresando producciones?'
+    elif tipo == 3:
+        vpt = 'seguir ingresando transacciones?'
+    elif tipo == 4:
+        vpt = 'salir de las estadisticas?'
+
+    while True:
+        try:
+            opcion = input(
+            f' ----------------------------------------------------------\n'
+            f' Quiere {vpt}?\n'
+            f' Y/N: ')
+
+            if opcion == 'Y' or opcion == 'N':
+                return opcion
+            else:
+                raise ValueError
+
+        except ValueError:
+            print('\n Solo puede responder con Y o N!!!')
+            continue
+
+# Funciones para verificar entradas de datos.
+
+def veri_ingresos(iog):
+    """Verificador de ingresos o gastos"""
 
     try:
-        select = int(select)
-        if select in opciones_totales:
+        if iog == 'Ingreso':
             veri = True
-            return veri, select
+            return veri, iog
+        elif iog == 'Gasto':
+            veri = True
+            return veri, iog
         else:
             raise ValueError
     except ValueError:
         veri = False
-        return veri, select
+        return veri, iog
 
 def veri_monto(monto,iog):
     """Verificador de montos"""
@@ -103,60 +154,58 @@ def veri_monto(monto,iog):
         veri = False
         return veri, monto
 
-def veri_opcion(opcion):
-    """Verificador de inicio"""
-
-    try:
-        if opcion == 'Y':
-            veri = 'Y'
-            return veri
-        elif opcion == 'N':
-            veri = 'N'
-            return veri
-        else:
-            raise ValueError("Opción de inicio inválida. Por favor, ingrese 'Y' o 'N'.")
-
-    except ValueError:
-        veri = False
-        return veri
-
-def veri_sucur(sucursal):
+def veri_sucur():
     """Verificador de sucursal"""
 
-    try:
-        if sucursal in SUCURSALES:
-            veri = True
-            return veri, sucursal
-        else:
-            raise ValueError
-    except ValueError:
-        veri = False
-        return veri, sucursal
+    errores = 0
 
-def veri_fecha(fecha):
+    while True:
+        try:
+            sucursal = input(
+            ' ----------------------------------------------------------\n'
+            ' ----------------------------------------------------------\n'
+            ' En que sucursal va a ingresar las ventas?\n'
+            ' Lista de sucursales: Space X, Google, Amazon\n'
+            ' Respuesta: ')
+            if sucursal in SUCURSALES:
+                return sucursal, errores
+            else:
+                raise ValueError
+        except ValueError:
+            errores += 1
+            print('\n Sucursal invalida. Ingrese una sucursal que este en la lista!!!'
+            '\n (Recuerde usar MAYUSCULAS)')
+            continue
+
+def veri_fecha():
     """Verificador de fechas"""
 
-    try:
-        dia_n, dia, mes, anho = fecha.split('/')
-        dia = int(dia)
-        anho = int(anho)
-        dia_n = dia_n.title()
-        mes = mes.title()
-        if dia_n in DIAS and 1 <= dia <= 31 and mes in MESES and 1900 <= anho <= 2023:
-            veri = True
-            fecha = f'{dia_n}/{dia}/{mes}/{anho}'
-            return veri, fecha, dia_n, dia, mes, anho
-        else:
-            raise ValueError
-    except (ValueError, IndexError,TypeError):
-        veri = False
-        dia = ''
-        dia_n = ''
-        mes = ''
-        anho = ''
-        return veri, fecha, dia_n, dia, mes, anho
+    errores = 0
 
-def veri_num(numero):
+    while True:
+        try:
+            fecha = input(
+                ' ----------------------------------------------------------\n'
+                ' ----------------------------------------------------------\n'
+                ' Ingrese una fecha para la/s venta/s.\n'
+                ' Con el siguiente formato: Lunes/12/Septiembre/2010.\n'
+                ' Respuesta: ')
+            dia_n, dia, mes, anho = fecha.split('/')
+            dia = int(dia)
+            anho = int(anho)
+            dia_n = dia_n.title()
+            mes = mes.title()
+            if dia_n in DIAS and 1 <= dia <= 31 and mes in MESES and 1900 <= anho <= 2023:
+                fecha = f'{dia_n}/{dia}/{mes}/{anho}'
+                return fecha, dia_n, dia, mes, anho, errores
+            else:
+                raise ValueError
+        except (ValueError, IndexError,TypeError):
+            print('\n Fecha no valida. Asegurese de ingresar en un formato valido!!!')
+            errores += 1
+            continue
+
+def veri_num_int(numero):
     """verificador de num"""
 
     try:
@@ -184,34 +233,29 @@ def veri_num_float(numero):
         veri = False
         return veri, numero
 
-def veri_idprod(ide):
+def veri_idprod():
     """Verificador de ID's"""
 
-    try:
-        if ide in ID_PRODUCTOS:
-            veri = True
-            return veri, ide
-        else:
-            raise ValueError
-    except ValueError:
-        veri = False
-        return veri, ide
+    while True:
 
-def veri_ingresos(iog):
-    """Verificador de ingresos o gastos"""
+        errores = 0
 
-    try:
-        if iog == 'Ingreso':
-            veri = True
-            return veri, iog
-        elif iog == 'Gasto':
-            veri = True
-            return veri, iog
-        else:
-            raise ValueError
-    except ValueError:
-        veri = False
-        return veri, iog
+        try:
+            prod_id = input(
+                ' ----------------------------------------------------------\n'
+                ' ----------------------------------------------------------\n'
+                ' Ingrese el ID del producto. (formato E4**, E401 hasta E410)\n'
+                ' Respuesta: ')
+            if prod_id in ID_PRODUCTOS:
+                return prod_id, errores
+            else:
+                raise ValueError
+        except ValueError:
+            print('\n Ingrese una ID valida!!! (ejemplo: E401, E402 ... E409,E410)')
+            errores += 1
+            continue
+
+# Funciones de registro / estadisticas.
 
 def reg_ventas():
     """Funcion para registrar ventas"""
@@ -220,45 +264,21 @@ def reg_ventas():
     with open('datos_de_empresa.txt','a', encoding='utf-8') as file:
         while True:
             # Input de Sucursales
-            while True:
-                sucursal = input("""
- ----------------------------------------------------------
- ----------------------------------------------------------
- En que sucursal va a ingresar las ventas?
- Lista de sucursales: Space X, Google, Amazon
- Respuesta: """)
-                veri, sucursal = veri_sucur(sucursal)
-                if veri:
-                    break
-                else:
-                    print('\n Sucursal invalida. Ingrese una sucursal que este en la lista!!!'
-                    '\n (Recuerde usar MAYUSCULAS)')
-                    total_err += 1
-                    continue
+            sucursal, errores = veri_sucur()
+            total_err += errores
+
             # Input de Fecha
-            while True:
-                fecha = input("""
- ----------------------------------------------------------
- ----------------------------------------------------------
- Ingrese una fecha para la/s venta/s.
- Con el siguiente formato:'Lunes/12/Septiembre/2010'.
- Respuesta: """)
-                veri, fecha, dia_n, dia, mes, anho = veri_fecha(fecha)
-                if veri:
-                    break
-                else:
-                    print('\n Fecha no valida. Asegurese de ingresar en un formato valido!!!')
-                    total_err += 1
-                    continue
+            fecha, dia_n, dia, mes, anho, errores = veri_fecha()
+            total_err += errores
+
             # Input de numero de ventas
             while True:
-                num_de_ventas = input(f"""
- ----------------------------------------------------------
- ----------------------------------------------------------
- Cuantas ventas va a ingresar?
- Para la feha: {fecha}
- Respuesta: """)
-                veri, num_de_ventas = veri_num(num_de_ventas)
+                num_de_ventas = input(
+                f' ----------------------------------------------------------\n'
+                f' ----------------------------------------------------------\n'
+                f' Cuantas ventas va a ingresar? Para la feha: {fecha}\n'
+                f' Respuesta: ')
+                veri, num_de_ventas = veri_num_int(num_de_ventas)
                 if veri:
                     break
                 else:
@@ -267,44 +287,33 @@ def reg_ventas():
                     continue
 
             for venta in range(num_de_ventas):
+
                 # Input de ID de producto
-                while True:
-                    prod_id = input("""
- ----------------------------------------------------------
- ----------------------------------------------------------
- Ingrese el ID del producto. 
- (formato E4**, E401 hasta E410)
- Respuesta: """)
-                    veri, prod_id = veri_idprod(prod_id)
-                    if veri:
-                        break
-                    else:
-                        print('\n Ingrese una ID valida!!! (ejemplo: E401, E402 ... E409,E410)')
-                        total_err += 1
-                        continue
+                prod_id, errores = veri_idprod()
+                total_err += errores
+
                 # Input de cantidad de producto con la ID anterior
                 while True:
-                    cant_de_producto = input(f"""
- ----------------------------------------------------------
- ----------------------------------------------------------  
- Cuantas unidades se vendieron del producto {prod_id}?
- Respuesta: """)
-                    veri, cant_de_producto = veri_num(cant_de_producto)
-
+                    cant_de_producto = input(
+                        f' ----------------------------------------------------------\n'
+                        f' ----------------------------------------------------------\n'
+                        f' Cuantas unidades se vendieron del producto {prod_id}?\n'
+                        f' Respuesta: ')
+                    veri, cant_de_producto = veri_num_int(cant_de_producto)
                     if veri:
                         break
                     else:
                         print('\n Numero de unidades invalida. Asegurese de ingresar valores positivos!!!')
                         total_err += 1
                         continue
+
                 # Input del precio del procducto con la ID anterior
                 while True:
-                    precio_producto = input(f"""
- ----------------------------------------------------------
- ----------------------------------------------------------
- A que precio se vendio {prod_id}?
- (En dolares)
- Respuestas: $""")
+                    precio_producto = input(
+                    ' ----------------------------------------------------------\n'
+                    ' ----------------------------------------------------------\n'
+                    ' A que precio se vendio {prod_id}? (En dolares)\n'
+                    ' Respuestas: $')
                     veri, precio_producto = veri_num_float(precio_producto)
                     if veri:
                         break
@@ -312,29 +321,18 @@ def reg_ventas():
                         print('\n Ingrese un precio valido. Solo puedo ingresar valores positivos!!!')
                         total_err += 1
                         continue
-                num_de_ventas -= 1
+
                 venta_txt = (f'venta,{sucursal},{dia_n},{dia},{mes},{anho},'
                 f'{prod_id},{cant_de_producto},{precio_producto},{total_err}\n')
                 file.write(venta_txt)
-                print("""
- ----------------------------------------------------------
+                print(
+                ' ----------------------------------------------------------\n\n'
+                ' Venta ingresada con EXITO.\n\n'
+                ' ----------------------------------------------------------')
+            
+            opcion = seguir_o_no(1)
 
- Venta ingresada con EXITO.
-
- ----------------------------------------------------------""")
-            while True:
-                opcion = input("""
- ----------------------------------------------------------
- ----------------------------------------------------------
- Quiere seguir ingresando ventas?
- Y/N: """).upper()
-                veri = veri_opcion(opcion)
-                if veri:
-                    break
-                else:
-                    print('\n Solo puede responder con Y o N!!!')
-                    continue
-            if opcion != 'Y':
+            if opcion == 'N':
                 break
 
 def reg_produc():
@@ -345,73 +343,55 @@ def reg_produc():
     with open('datos_de_empresa.txt','a', encoding='utf-8') as file:
         while True:
             # Input de Fecha.
-            while True:
-                fecha = input("""
- ----------------------------------------------------------
- ----------------------------------------------------------
- Ingrese una fecha para la/s producion/es.
- Con el siguiente formato:'Lunes/12/Septiembre/2010'.
- Respuesta: """)
-                veri, fecha, dia_n, dia, mes, anho = veri_fecha(fecha)
-                if veri:
-                    break
-                else:
-                    print('\n Fecha no valida. Asegurese de ingresar en el formato valido!!!')
-                    total_err += 1
-                    continue
+            fecha, dia_n, dia, mes, anho, errores = veri_fecha()
+            total_err += errores
+
             # Input de cantidad de produciones.
             while True:
-                cant_de_produccion = input(f"""
- ----------------------------------------------------------
- ----------------------------------------------------------
- Cuantas producciones hubieron en el dia '{fecha}'?
- Respuesta: """)
-                veri, cant_de_produccion = veri_num(cant_de_produccion)
+                cant_de_produccion = input(
+                f' ----------------------------------------------------------'
+                f' ----------------------------------------------------------'
+                f' Cuantas producciones hubieron en el dia {fecha}?'
+                f' Respuesta: ')
+                veri, cant_de_produccion = veri_num_int(cant_de_produccion)
                 if veri:
                     break
                 else:
-                    print('\n Cantidad de produciones invalida.'
+                    print(
+                    '\n Cantidad de produciones invalida.\n'
                     'Asegurese de ingresar valores positivos!!!')
                     total_err += 1
                     continue
             for producion in range(cant_de_produccion):
-                while True:
-                    # Formato de id E4** ejemplo E402, etc...
-                    prod_id = input("""
- ----------------------------------------------------------
- ----------------------------------------------------------
- Ingrese el ID del producto. 
- (formato E4**, E401 hasta E410)
- Respuesta: """)
-                    veri, prod_id = veri_idprod(prod_id)
-                    if veri:
-                        break
-                    else:
-                        print('\n Ingrese una ID valida!!! (ejemplo: E401, E402 ... E409,E410)')
-                        total_err += 1
-                        continue
+
+                # Input de id de producto
+                prod_id, errores = veri_idprod()
+                total_err += errores
+
                 # Input de cantidad de unidades de la produccion
                 while True:
-                    cant_de_produccion = input(f"""
- ----------------------------------------------------------
- ----------------------------------------------------------  
- Cuantas unidades se produjeron del producto {prod_id}?
- Respuesta: """)
-                    veri, cant_de_produccion = veri_num(cant_de_produccion)
+                    cant_de_produccion = input(
+                    f' ----------------------------------------------------------\n'
+                    f' ----------------------------------------------------------\n'
+                    f' Cuantas unidades se produjeron del producto {prod_id}?\n'
+                    f' Respuesta: ')
+
+                    veri, cant_de_produccion = veri_num_int(cant_de_produccion)
                     if veri:
                         break
                     else:
                         print('\n Numero de unidades invalida. Asegurese de ingresar valores positivos!!!')
                         total_err =+1
                         continue
+
                 # Input para el costo de prod para x cantidad de unidades
                 while True:
-                    costo_produccion = input(f"""
- ----------------------------------------------------------
- ----------------------------------------------------------
- Que costo de produccion tuvo producir {cant_de_produccion} del producto {prod_id}? 
- (En dolares)
- Respuesta: $""")
+                    costo_produccion = input(
+                        f' ----------------------------------------------------------\n'
+                        f' ----------------------------------------------------------\n'
+                        f' Que costo de produccion tuvo producir {cant_de_produccion} del producto {prod_id}?\n'
+                        f' (En dolares)\n'
+                        f' Respuesta: $')
                     veri, costo_produccion = veri_num_float(costo_produccion)
                     if veri:
                         break
@@ -419,28 +399,17 @@ def reg_produc():
                         print('\n Ingrese un costo valido. Solo puede ingresar valores positivos!!!')
                         total_err += 1
                         continue
+
                 produccion_txt = (f'produccion,{dia_n}, {dia}, {mes}, {anho},'
                 f'{prod_id},{cant_de_produccion},{costo_produccion},{total_err}\n')
                 file.write(produccion_txt)
-                print("""
- ----------------------------------------------------------
+                print(
+                ' ----------------------------------------------------------\n\n'
+                ' Produccion ingresada con EXITO.\n\n'
+                ' ----------------------------------------------------------')
+            opcion = seguir_o_no(2)
 
- Produccion ingresada con EXITO.
-
- ----------------------------------------------------------""")
-            while True:
-                opcion = input("""
- ----------------------------------------------------------
- ----------------------------------------------------------
- Quiere seguir ingresando producciones? 
- Y/N: """).upper()
-                veri = veri_opcion(opcion)
-                if veri:
-                    break
-                else:
-                    print('\n Solo puede responder con Y o N')
-                    continue
-            if opcion != 'Y':
+            if opcion == 'N':
                 break
 
 def reg_fina():
@@ -452,12 +421,12 @@ def reg_fina():
         while True:
             # Input de numero de transacciones
             while True:
-                num_de_tran = input("""
- ----------------------------------------------------------
- ----------------------------------------------------------
- Cuantas transacciones va a ingresar?
- Respuesta: """)
-                veri, num_de_tran = veri_num(num_de_tran)
+                num_de_tran = input(
+                ' ----------------------------------------------------------\n'
+                ' ----------------------------------------------------------\n'
+                ' Cuantas transacciones va a ingresar?\n'
+                ' Respuesta: ')
+                veri, num_de_tran = veri_num_int(num_de_tran)
                 if veri:
                     break
                 else:
@@ -468,11 +437,10 @@ def reg_fina():
 
             for transac in range(num_de_tran):
                 while True:
-                    iog = input("""
- ----------------------------------------------------------
- ----------------------------------------------------------
- La transaccion es Ingreso o Gasto?
- Respuesta: """)
+                    iog = input(' ----------------------------------------------------------'
+                    ' ----------------------------------------------------------'
+                    ' La transaccion es Ingreso o Gasto?'
+                    ' Respuesta: ')
                     veri, iog = veri_ingresos(iog)
                     if veri:
                         break
@@ -482,11 +450,10 @@ def reg_fina():
                         total_err += 1
                         continue
                 while True:
-                    monto = input(f"""
- ----------------------------------------------------------
- ----------------------------------------------------------
- Introdusca su {iog}.
- Respuesta: $""")
+                    monto = input(f' ----------------------------------------------------------'
+                    f' ----------------------------------------------------------'
+                    f' Introdusca su {iog}.'
+                    f' Respuesta: $')
                     veri, monto = veri_monto(monto,iog)
                     if veri:
                         break
@@ -495,37 +462,24 @@ def reg_fina():
                         'Recuerde que los Gastos son negativos y los Ingresos positivos!!!')
                         total_err += 1
                         continue
+
                 num_de_tran -= 1
                 transaccion_txt = f'transaccion, {monto},{total_err}\n'
                 file.write(transaccion_txt)
-                print("""
- ----------------------------------------------------------
+                print(
+                ' ----------------------------------------------------------\n\n'
+                ' Transaccion ingresada con EXITO.\n\n'
+                ' ----------------------------------------------------------')
+            opcion = seguir_o_no(3)
 
- Transaccion ingresada con EXITO.
-
- ----------------------------------------------------------""")
-            while True:
-                opcion = input("""
- ----------------------------------------------------------
- ----------------------------------------------------------
- Quiere seguir ingresando ventas? 
- Y/N: """).upper()
-                veri = veri_opcion(opcion)
-                if veri:
-                    print('\n Solo puede responder con Y o N')
-                    break
-                else:
-                    continue
-
-            if opcion != 'Y':
+            if opcion == 'N':
                 break
 
 def estadisticas():
     """Funcion que calcula las estadisticas a mostrar"""
 
-    veri =True
     try:
-        while veri:
+        while True:
 
             total_errores = 0
             cant_producto_2023 = 0
@@ -564,7 +518,7 @@ def estadisticas():
                             cant_producto_2023 += cant_producto
 
                         #  8. Margen neto para los meses de junio, julio y agosto.
-                        if mes == 'Julio' or mes == 'Junio' or mes == 'Agosto':
+                        if mes in ['Julio','Junio','Agosto']:
                             jja_ventas += (precio_producto * cant_producto)
 
                     elif tipo == 'produccion':
@@ -577,12 +531,12 @@ def estadisticas():
                         total_errores += errores
 
                         #  6. Promedio de costos de producción en fin de semana.
-                        if dia == 'Sabado' or dia == 'Domingo':
+                        if dia in ['Sabado','Domingo']:
                             costo_produccion_total_sd += costo_produccion
                             cont_produccion_sd += 1
 
                         #  8. Margen neto para los meses de junio, julio y agosto.
-                        if mes == 'Julio' or mes == 'Junio' or mes == 'Agosto':
+                        if mes in ['Julio','Junio','Agosto']:
                             jja_costo_produccion += costo_produccion
 
                     elif tipo == 'transaccion':
@@ -621,30 +575,23 @@ def estadisticas():
                 else:
                     msg_cant_producto_2023 = 'No se vendio ningun producto en 2023'
 
-                msg_estadistica = f"""
- ----------------------------------------------------------
- Cantidad de veces que un hubo un error de limpieza de datos: {msg_total_errores}
+                print(
+                f'\n'
+                f' ----------------------------------------------------------\n'
+                f' Cantidad de veces que un hubo un error de limpieza de datos: {msg_total_errores}\n'
+                f' Indicar el mes que tuvo más ventas. Mes: {nombre_mes_mayor}, con {cant_mes_mayor_venta} ventas.\n'
+                f' Cantidad de productos vendidos para el 2023: {msg_cant_producto_2023}\n'
+                f' Promedio de costos de producción en fin de semana: {promedio_cost_produccion_sd}\n'
+                f' Margen neto para los meses de Junio, Julio y Agosto: {margen_neto_jja_txt}\n'
+                )
 
- Indicar el mes que tuvo más ventas. Mes: {nombre_mes_mayor}, con {cant_mes_mayor_venta} ventas.
-
- Cantidad de productos vendidos para el 2023: {msg_cant_producto_2023}
-
- Promedio de costos de producción en fin de semana: {promedio_cost_produccion_sd}
-
- Margen neto para los meses de Junio, Julio y Agosto: {margen_neto_jja_txt}
- """
-                print(msg_estadistica)
                 for sucursal, monto in zip(SUCURSALES, monto_total_sucursales):
                     print(f' Monto total de {sucursal} es: {monto}\n')
-                while True:
-                    print(' ----------------------------------------------------------')
-                    opcion = input(' Escriba "Y" para continuar: ').upper()
-                    veri = veri_opcion(opcion)
-                    if veri:
-                        veri = False
-                        break
-                    else:
-                        continue
+
+                opcion = seguir_o_no(4)
+                if opcion == 'Y':
+                    break
+
     except Exception:
         print('\n Uno o mas datos del archivo que ingreso estan erroneos!!\n')
         traceback.print_exc()
@@ -652,38 +599,31 @@ def estadisticas():
 def main():
     """Función principal"""
 
+    # Menú principal.
     while True:
-        # Menú principal.
-        while True:
-            select_main = input(MSG_MENU_M)
-            veri, opcion_main = veri_menus(3, select_main)
-            if veri:
-                break
-            else:
-                continue
+        opcion_main = veri_menus(3,MSG_MENU_M)
 
-        # Ingresar Datos.
+        # Menu para ingresar Datos.
         if opcion_main == 1:
-            while True:
-                select_write = input(MSG_MENU_W)
-                veri, opcion_write = veri_menus(4, select_write)
-                if veri:
-                    break
-                else:
-                    continue
+            opcion_write = veri_menus(4,MSG_MENU_W)
 
             # Registro de ventas.
             if opcion_write == 1:
                 reg_ventas()
+
             # Registro de producciones.
             elif opcion_write == 2:
                 reg_produc()
+
             # Registro de finanzas.
             elif opcion_write == 3:
                 reg_fina()
+
             # Volver al menu principal
             elif  opcion_write == 4:
-                print('\n ----------------------------------------------------------\n'
+                print(
+                '\n'
+                ' ----------------------------------------------------------\n'
                 ' Volviendo al menu princimal...')
 
         # Mostrar estadísticas.
@@ -692,9 +632,10 @@ def main():
 
         # Salir de la app.
         elif opcion_main == 3:
-            print("""
- ----------------------------------------------------------
- Saliendo de la app...""")
+            print(
+            '\n'
+            ' ----------------------------------------------------------\n'
+            ' Saliendo de la app...')
             break
 
 if __name__ == '__main__':
