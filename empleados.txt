@@ -1,7 +1,0 @@
-Alfonso Cardenas;52;800000;0
-Pedro Flores;38;1500000;1
-Joaquin Mesa;44;1500000;0
-Estela Veliz;42;1500000;0
-Camila Ordenes;28;2000000;1
-Tomas Alba;35;800000;0
-Tomas Albas;10;800000;0
