@@ -1,2 +1,1 @@
-venta,Google,Lunes,12,Septiembre,2010,E401,10,50,1
-venta,Google,Lunes,12,Septiembre,2010,E402,50,5,1
+venta,Space X,Lunes,12,Septiembre,2015,E401,5,9.99,10

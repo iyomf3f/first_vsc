@@ -1,0 +1,13 @@
+[MASTER]
+
+[MESSAGES CONTROL]
+disable =
+    invalid-name
+
+[BASIC]
+
+good-names = variable_names,function_names
+
+[FORMAT]
+
+max-line-length = 115

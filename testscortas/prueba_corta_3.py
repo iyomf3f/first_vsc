@@ -1,6 +1,6 @@
 rango18_40 = 0
 rango41_60 = 0
-rango61_70 = 0 
+rango61_70 = 0
 rango70_ = 0
 Cuprum = 0
 Provida = 0

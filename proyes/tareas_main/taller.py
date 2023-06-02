@@ -1,7 +1,7 @@
 """Function printing python version."""
 
 # Taller 2
-# Integrantes: 
+# Integrantes:
 ####################################################################################################
 import traceback
 
@@ -78,14 +78,14 @@ def veri_menus(opciones,msg):
         try:
             select = int(input(msg))
 
-            for opcion in range(1, opciones + 1):
-                opciones_totales.append(opcion)
+            opciones_totales = list(range(1,opciones + 1))
 
             if select in opciones_totales:
                 return select
             else:
                 raise ValueError
         except ValueError:
+            print(f'Ingrese una respuesta valida entre 1 y {opciones}')
             continue
 
 def repetir_o_no(tipo):
@@ -174,7 +174,7 @@ def veri_sucur():
                 raise ValueError
         except ValueError:
             errores += 1
-            print('\n Sucursal invalida. Ingrese una sucursal que este en la lista!!!'
+            print('\n SUCURSAL INVALIDA. Ingrese una sucursal que este en la lista!!!'
             '\n (Recuerde usar MAYUSCULAS)')
             continue
 
@@ -202,7 +202,7 @@ def veri_fecha():
             else:
                 raise ValueError
         except (ValueError, IndexError,TypeError):
-            print('\n Fecha no valida. Asegurese de ingresar en un formato valido!!!')
+            print('\n FECHA NO VALIDA. Asegurese de ingresar en un formato valido!!!')
             errores += 1
             continue
 
@@ -252,7 +252,7 @@ def veri_idprod():
             else:
                 raise ValueError
         except ValueError:
-            print('\n Ingrese una ID valida!!! (ejemplo: E401, E402 ... E409,E410)')
+            print('\n ID NO VALIDA. (ejemplo: E401, E402 ... E409,E410)')
             errores += 1
             continue
 
@@ -641,3 +641,4 @@ def main():
             break
 
 if __name__ == '__main__':
+    main()
