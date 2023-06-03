@@ -1,1 +1,8 @@
-venta,Space X,Lunes,12,Septiembre,2015,E401,5,9.99,10
+venta,Space X,Lunes,12,Septiembre,2010,E402,3,2.0,1
+venta,Google,Lunes,12,Septiembre,2010,E401,2,10.0,4
+produccion,Lunes, 12, Septiembre, 2012,E403,5,5.99,0
+produccion,Lunes, 12, Septiembre, 2010,E403,5,50.0,0
+produccion,Lunes, 12, Septiembre, 2010,E401,100,100.0,0
+transaccion, 600,0
+transaccion, -900,0
+transaccion, 10000,0

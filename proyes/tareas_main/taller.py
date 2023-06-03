@@ -20,9 +20,9 @@ MSG_MENU_W = """
  Menu de Registros
  ----------------------------------------------------------
  ----------------------------------------------------------
- 1. Registro de ventas.
- 2. Registro de producciónes.
- 3. Registro de transacciones.
+ 1. Registrar venta.
+ 2. Registrar producción.
+ 3. Registrar transaccion.
  4. Salir.
  ----------------------------------------------------------
  Elegir: """
@@ -85,7 +85,7 @@ def veri_menus(opciones,msg):
             else:
                 raise ValueError
         except ValueError:
-            print(f'Ingrese una respuesta valida entre 1 y {opciones}')
+            print(f'\nENTRADA NO VALIDA. Ingrese un numero del 1 al {opciones}')
             continue
 
 def repetir_o_no(tipo):
@@ -178,19 +178,25 @@ def veri_sucur():
             '\n (Recuerde usar MAYUSCULAS)')
             continue
 
-def veri_fecha():
+def veri_fecha(tipo):
     """Verificador de fechas"""
 
     errores = 0
 
+    if tipo == 'venta':
+        texto = "la/s venta/s."
+    elif tipo == 'produccion':
+        texto = "la/s producion/es"
+
+
     while True:
         try:
             fecha = input(
-                ' ----------------------------------------------------------\n'
-                ' ----------------------------------------------------------\n'
-                ' Ingrese una fecha para la/s venta/s.\n'
-                ' Con el siguiente formato: Lunes/12/Septiembre/2010.\n'
-                ' Respuesta: ')
+                f' ----------------------------------------------------------\n'
+                f' ----------------------------------------------------------\n'
+                f' Ingrese una fecha para {texto}\n'
+                f' Con el siguiente formato: Lunes/12/Septiembre/2010.\n'
+                f' Respuesta: ')
             dia_n, dia, mes, anho = fecha.split('/')
             dia = int(dia)
             anho = int(anho)
@@ -269,7 +275,7 @@ def reg_ventas():
             total_err += errores
 
             # Input de Fecha
-            fecha, dia_n, dia, mes, anho, errores = veri_fecha()
+            fecha, dia_n, dia, mes, anho, errores = veri_fecha(venta)
             total_err += errores
 
             # Input de numero de ventas
@@ -277,7 +283,8 @@ def reg_ventas():
                 num_de_ventas = input(
                 f' ----------------------------------------------------------\n'
                 f' ----------------------------------------------------------\n'
-                f' Cuantas ventas va a ingresar? Para la feha: {fecha}\n'
+                f' Cuantas ventas va a ingresar?\n'
+                f' Para la feha: {fecha}\n'
                 f' Respuesta: ')
                 veri, num_de_ventas = veri_num_int(num_de_ventas)
                 if veri:
@@ -298,28 +305,28 @@ def reg_ventas():
                     cant_de_producto = input(
                         f' ----------------------------------------------------------\n'
                         f' ----------------------------------------------------------\n'
-                        f' Cuantas unidades se vendieron del producto {prod_id}?\n'
+                        f' Cuantas unidades se vendieron del producto: {prod_id}?\n'
                         f' Respuesta: ')
                     veri, cant_de_producto = veri_num_int(cant_de_producto)
                     if veri:
                         break
                     else:
-                        print('\n Numero de unidades invalida. Asegurese de ingresar valores positivos!!!')
+                        print('\n NUMERO DE UNIDADES INVALIDA. Asegurese de ingresar valores positivos!!!')
                         total_err += 1
                         continue
 
                 # Input del precio del procducto con la ID anterior
                 while True:
                     precio_producto = input(
-                    ' ----------------------------------------------------------\n'
-                    ' ----------------------------------------------------------\n'
-                    ' A que precio se vendio {prod_id}? (En dolares)\n'
-                    ' Respuestas: $')
+                    f' ----------------------------------------------------------\n'
+                    f' ----------------------------------------------------------\n'
+                    f' A que precio se vendio la unidad de {prod_id}? (En dolares)\n'
+                    f' Respuestas: $')
                     veri, precio_producto = veri_num_float(precio_producto)
                     if veri:
                         break
                     else:
-                        print('\n Ingrese un precio valido. Solo puedo ingresar valores positivos!!!')
+                        print('\n PRECIO INVALIDO. Solo puedo ingresar valores positivos!!!')
                         total_err += 1
                         continue
 
@@ -344,15 +351,15 @@ def reg_produc():
     with open('datos_de_empresa.txt','a', encoding='utf-8') as file:
         while True:
             # Input de Fecha.
-            fecha, dia_n, dia, mes, anho, errores = veri_fecha()
+            fecha, dia_n, dia, mes, anho, errores = veri_fecha(produccion)
             total_err += errores
 
             # Input de cantidad de produciones.
             while True:
                 cant_de_produccion = input(
-                f' ----------------------------------------------------------'
-                f' ----------------------------------------------------------'
-                f' Cuantas producciones hubieron en el dia {fecha}?'
+                f' ----------------------------------------------------------\n'
+                f' ----------------------------------------------------------\n'
+                f' Cuantas producciones hubieron en el dia {fecha}?\n'
                 f' Respuesta: ')
                 veri, cant_de_produccion = veri_num_int(cant_de_produccion)
                 if veri:
@@ -390,7 +397,7 @@ def reg_produc():
                     costo_produccion = input(
                         f' ----------------------------------------------------------\n'
                         f' ----------------------------------------------------------\n'
-                        f' Que costo de produccion tuvo producir {cant_de_produccion} del producto {prod_id}?\n'
+                        f' Que costo de produccion tuvo producir {cant_de_produccion} unidades del producto {prod_id}?\n'
                         f' (En dolares)\n'
                         f' Respuesta: $')
                     veri, costo_produccion = veri_num_float(costo_produccion)
@@ -438,9 +445,10 @@ def reg_fina():
 
             for transac in range(num_de_tran):
                 while True:
-                    iog = input(' ----------------------------------------------------------'
-                    ' ----------------------------------------------------------'
-                    ' La transaccion es Ingreso o Gasto?'
+                    iog = input(
+                    ' ----------------------------------------------------------\n'
+                    ' ----------------------------------------------------------\n'
+                    ' La transaccion es Ingreso o Gasto?\n'
                     ' Respuesta: ')
                     veri, iog = veri_ingresos(iog)
                     if veri:
@@ -451,7 +459,8 @@ def reg_fina():
                         total_err += 1
                         continue
                 while True:
-                    monto = input(f' ----------------------------------------------------------'
+                    monto = input(
+                    f' ----------------------------------------------------------'
                     f' ----------------------------------------------------------'
                     f' Introdusca su {iog}.'
                     f' Respuesta: $')
@@ -580,7 +589,7 @@ def estadisticas():
                 f'\n'
                 f' ----------------------------------------------------------\n'
                 f' Cantidad de veces que un hubo un error de limpieza de datos: {msg_total_errores}\n'
-                f' Indicar el mes que tuvo más ventas. Mes: {nombre_mes_mayor}' 
+                f' Mes con mas ventas: {nombre_mes_mayor}' 
                 f', con {cant_mes_mayor_venta} ventas.\n'
                 f' Cantidad de productos vendidos para el 2023: {msg_cant_producto_2023}\n'
                 f' Promedio de costos de producción en fin de semana: {promedio_cost_produccion_sd}\n'
