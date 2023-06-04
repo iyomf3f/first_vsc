@@ -1,7 +1,7 @@
 """Function printing python version."""
 
 # Taller 2
-# Integrantes:
+# Integrantes: Paulo Zarate
 ####################################################################################################
 import traceback
 
@@ -23,7 +23,7 @@ MSG_MENU_W = """
  1. Registrar venta.
  2. Registrar producción.
  3. Registrar transaccion.
- 4. Salir.
+ 4. Volver.
  ----------------------------------------------------------
  Elegir: """
 SUCURSALES = [
@@ -275,7 +275,7 @@ def reg_ventas():
             total_err += errores
 
             # Input de Fecha
-            fecha, dia_n, dia, mes, anho, errores = veri_fecha(venta)
+            fecha, dia_n, dia, mes, anho, errores = veri_fecha('venta')
             total_err += errores
 
             # Input de numero de ventas
@@ -351,7 +351,7 @@ def reg_produc():
     with open('datos_de_empresa.txt','a', encoding='utf-8') as file:
         while True:
             # Input de Fecha.
-            fecha, dia_n, dia, mes, anho, errores = veri_fecha(produccion)
+            fecha, dia_n, dia, mes, anho, errores = veri_fecha('produccion')
             total_err += errores
 
             # Input de cantidad de produciones.
@@ -460,9 +460,9 @@ def reg_fina():
                         continue
                 while True:
                     monto = input(
-                    f' ----------------------------------------------------------'
-                    f' ----------------------------------------------------------'
-                    f' Introdusca su {iog}.'
+                    f' ----------------------------------------------------------\n'
+                    f' ----------------------------------------------------------\n'
+                    f' Introdusca su {iog}.\n'
                     f' Respuesta: $')
                     veri, monto = veri_monto(monto,iog)
                     if veri:
@@ -634,8 +634,8 @@ def main():
             elif  opcion_write == 4:
                 print(
                 '\n'
-                ' ----------------------------------------------------------\n'
-                ' Volviendo al menu princimal...')
+                ' Volviendo al menu princimal...'
+                ' ----------------------------------------------------------\n')
 
         # Opcion para mostrar estadísticas.
         elif opcion_main == 2:

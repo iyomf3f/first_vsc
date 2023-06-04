@@ -6,3 +6,6 @@ produccion,Lunes, 12, Septiembre, 2010,E401,100,100.0,0
 transaccion, 600,0
 transaccion, -900,0
 transaccion, 10000,0
+venta,Amazon,Lunes,12,Septiembre,2010,E401,10,23.0,14
+transaccion, 10000000000,9
+transaccion, -123099,11
