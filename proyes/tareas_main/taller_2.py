@@ -3,7 +3,6 @@
 # Taller 2
 # Integrantes: Paulo Zarate
 ####################################################################################################
-import traceback
 
 # Listas / Mensajes
 
@@ -558,11 +557,12 @@ def estadisticas():
                 # 17. Indicar el mes que tuvo más ventas.
                 cant_mes_mayor_venta = max(meses_contadores)
                 nombre_mes_mayor = MESES[meses_contadores.index(cant_mes_mayor_venta)]
-
+                
+                #Bloque para determinar si algun valor es 0 para cambiarlo por un mensaje que indique 'No hube/registro/hay x cosa'
                 if cant_mes_mayor_venta == 0:
                     nombre_mes_mayor = 'Ninguno'
                     cant_mes_mayor_venta = 'Ninguno'
-
+                
                 if cont_produccion_sd > 0:
                     promedio_cost_produccion_sd = costo_produccion_total_sd / cont_produccion_sd
                 else:
@@ -585,16 +585,33 @@ def estadisticas():
                 else:
                     msg_cant_producto_2023 = 'No se vendio ningun producto en 2023'
 
+
+
+                # 17. Indicar el mes que tuvo más ventas.
+
+                   # Si la cantidad de ventas se repite en mas de un mes se buscan e imprimen con una iteracion
+                # Inicio de print's de datos
+                if meses_contadores.count(cant_mes_mayor_venta) > 1:
+                    print(
+                        f'\n'
+                        f' ----------------------------------------------------------\n'
+                        f' Meses con la mayor cantidad de ventas ({cant_mes_mayor_venta} ventas): '
+                        )
+                    for mess, cant_de_ventas in zip(MESES, meses_contadores):
+                        if cant_de_ventas == cant_mes_mayor_venta:
+                            print(mess)
+                else:
+                    print(
+                        f' ----------------------------------------------------------\n'
+                        f' Mes con mas ventas: {nombre_mes_mayor}' 
+                        f', con {cant_mes_mayor_venta} ventas.')
+
                 print(
-                f'\n'
-                f' ----------------------------------------------------------\n'
-                f' Cantidad de veces que un hubo un error de limpieza de datos: {msg_total_errores}\n'
-                f' Mes con mas ventas: {nombre_mes_mayor}' 
-                f', con {cant_mes_mayor_venta} ventas.\n'
-                f' Cantidad de productos vendidos para el 2023: {msg_cant_producto_2023}\n'
-                f' Promedio de costos de producción en fin de semana: {promedio_cost_produccion_sd}\n'
-                f' Margen neto para los meses de Junio, Julio y Agosto: {margen_neto_jja_txt}\n'
-                )
+                    f' Cantidad de veces que un hubo un error de limpieza de datos: {msg_total_errores}\n'
+                    f' Cantidad de productos vendidos para el 2023: {msg_cant_producto_2023}\n'
+                    f' Promedio de costos de producción en fin de semana: {promedio_cost_produccion_sd}\n'
+                    f' Margen neto para los meses de Junio, Julio y Agosto: {margen_neto_jja_txt}\n'
+                    )
 
                 for sucursal, monto in zip(SUCURSALES, monto_total_sucursales):
                     print(f' Monto total de {sucursal} es: {monto}\n')
@@ -603,9 +620,10 @@ def estadisticas():
                 if opcion == 'Y':
                     break
 
-    except Exception:
+    except Exception as error:
+        print(error)
         print('\n Uno o mas datos del archivo que ingreso estan erroneos!!\n')
-        traceback.print_exc()
+
 
 def main():
     """Función principal"""
