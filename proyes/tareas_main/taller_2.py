@@ -1,7 +1,7 @@
 """Function printing python version."""
 
 # Taller 2
-# Integrantes: Paulo Zarate
+# Integrantes:
 ####################################################################################################
 
 # Listas / Mensajes
