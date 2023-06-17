@@ -1,7 +1,7 @@
-"""Function printing python version."""
+""" Taller numero #2 """
 
 # Taller 2
-# Integrantes:
+# Integrantes: Paulo Zarate
 ####################################################################################################
 
 # Listas / Mensajes
@@ -10,7 +10,7 @@ MSG_MENU_M = """
  Menu Principal
  ----------------------------------------------------------
  ----------------------------------------------------------
- 1. Ingresar Datos.
+ 1. Registrar Datos.
  2. Leer datos.
  3. Salir
  ----------------------------------------------------------
@@ -66,7 +66,7 @@ ID_PRODUCTOS = [
     'E410'
     ]
 
-# Funciones para menus y repetir acciones o no.
+# Funciones para menus y repetir funcion o seguir.
 
 def veri_menus(opciones,msg):
     """Verificador de menus"""
@@ -366,7 +366,7 @@ def reg_produc():
                 else:
                     print(
                     '\n Cantidad de produciones invalida.\n'
-                    'Asegurese de ingresar valores positivos!!!')
+                    ' Asegurese de ingresar valores positivos!!!')
                     total_err += 1
                     continue
             for producion in range(cant_de_produccion):
@@ -397,7 +397,6 @@ def reg_produc():
                         f' ----------------------------------------------------------\n'
                         f' ----------------------------------------------------------\n'
                         f' Que costo de produccion tuvo producir {cant_de_produccion} unidades del producto {prod_id}?\n'
-                        f' (En dolares)\n'
                         f' Respuesta: $')
                     veri, costo_produccion = veri_num_float(costo_produccion)
                     if veri:
@@ -486,6 +485,12 @@ def reg_fina():
 
 def estadisticas():
     """Funcion que calcula las estadisticas a mostrar"""
+    # 17. Indicar el mes que tuvo más ventas.
+    #  3. Monto total de ventas por cada sucursal.
+    # 10. Cantidad de veces que un hubo un error de limpieza de datos.
+    # 12. Cantidad de productos vendidos para el 2023.
+    #  8. Margen neto para los meses de junio, julio y agosto.
+    #  6. Promedio de costos de producción en fin de semana.
 
     try:
         while True:
@@ -513,20 +518,20 @@ def estadisticas():
                         precio_producto = float(part[8])
                         errores = int(part[9])
 
-                        # 17. Indicar el mes que tuvo más ventas.
+                                    # 17. Indicar el mes que tuvo más ventas.
                         meses_contadores[MESES.index(mes)] += 1
 
-                        #  3. Monto total de ventas por cada sucursal.
+                                    #  3. Monto total de ventas por cada sucursal.
                         monto_total_sucursales[SUCURSALES.index(sucursal)] += (precio_producto * cant_producto)
 
-                        # 10. Cantidad de veces que un hubo un error de limpieza de datos.
+                                    # 10. Cantidad de veces que un hubo un error de limpieza de datos.
                         total_errores += errores
 
-                        # 12. Cantidad de productos vendidos para el 2023.
+                                    # 12. Cantidad de productos vendidos para el 2023.
                         if anho == 2023:
                             cant_producto_2023 += cant_producto
 
-                        #  8. Margen neto para los meses de junio, julio y agosto.
+                                    #  8. Margen neto para los meses de junio, julio y agosto.
                         if mes in ['Julio','Junio','Agosto']:
                             jja_ventas += (precio_producto * cant_producto)
 
@@ -536,32 +541,32 @@ def estadisticas():
                         costo_produccion = float(part[7])
                         errores = int(part[8])
 
-                        # 10. Cantidad de veces que un hubo un error de limpieza de datos.
+                                    # 10. Cantidad de veces que un hubo un error de limpieza de datos.
                         total_errores += errores
 
-                        #  6. Promedio de costos de producción en fin de semana.
+                                    #  6. Promedio de costos de producción en fin de semana.
                         if dia in ['Sabado','Domingo']:
                             costo_produccion_total_sd += costo_produccion
                             cont_produccion_sd += 1
 
-                        #  8. Margen neto para los meses de junio, julio y agosto.
+                                    #  8. Margen neto para los meses de junio, julio y agosto.
                         if mes in ['Julio','Junio','Agosto']:
                             jja_costo_produccion += costo_produccion
 
                     elif tipo == 'transaccion':
                         errores = int(part[2])
 
-                        # 10. Cantidad de veces que un hubo un error de limpieza de datos.
+                                    # 10. Cantidad de veces que un hubo un error de limpieza de datos.
                         total_errores += errores
 
-                # 17. Indicar el mes que tuvo más ventas.
+                            # 17. Indicar el mes que tuvo más ventas.
                 cant_mes_mayor_venta = max(meses_contadores)
                 nombre_mes_mayor = MESES[meses_contadores.index(cant_mes_mayor_venta)]
                 
-                #Bloque para determinar si algun valor es 0 para cambiarlo por un mensaje que indique 'No hube/registro/hay x cosa'
+                            #Bloque para determinar si algun valor es 0 para cambiarlo por un mensaje que indique 'No hube/registro/hay x cosa'
                 if cant_mes_mayor_venta == 0:
                     nombre_mes_mayor = 'Ninguno'
-                    cant_mes_mayor_venta = 'Ninguno'
+                    cant_mes_mayor_venta = '0'
                 
                 if cont_produccion_sd > 0:
                     promedio_cost_produccion_sd = costo_produccion_total_sd / cont_produccion_sd
@@ -587,24 +592,24 @@ def estadisticas():
 
 
 
-                # 17. Indicar el mes que tuvo más ventas.
+                            # 17. Indicar el mes que tuvo más ventas.
 
-                   # Si la cantidad de ventas se repite en mas de un mes se buscan e imprimen con una iteracion
-                # Inicio de print's de datos
+                    # Si la cantidad de ventas se repite en mas de un mes se buscan e imprimen con una iteracion
+                    # Inicio de print's de datos
                 if meses_contadores.count(cant_mes_mayor_venta) > 1:
                     print(
                         f'\n'
                         f' ----------------------------------------------------------\n'
-                        f' Meses con la mayor cantidad de ventas ({cant_mes_mayor_venta} ventas): '
+                        f' Meses con la mayor cantidad de ventas ({cant_mes_mayor_venta}):'
                         )
                     for mess, cant_de_ventas in zip(MESES, meses_contadores):
                         if cant_de_ventas == cant_mes_mayor_venta:
-                            print(mess)
+                            print(f' {mess}')
                 else:
                     print(
                         f' ----------------------------------------------------------\n'
-                        f' Mes con mas ventas: {nombre_mes_mayor}' 
-                        f', con {cant_mes_mayor_venta} ventas.')
+                        f' El mes con mas ventas: {nombre_mes_mayor}\n' 
+                        f' Con: {cant_mes_mayor_venta} ventas.')
 
                 print(
                     f' Cantidad de veces que un hubo un error de limpieza de datos: {msg_total_errores}\n'
